@@ -407,11 +407,14 @@ setupColorPair('bg-color', 'bg-color-hex', (color) => {
 
 // Background transparent
 const bgTransToggle = document.getElementById('bg-transparent');
+const bgColorGroup = document.getElementById('bg-color-group');
 bgTransToggle.addEventListener('change', () => {
     if (bgTransToggle.checked) {
         currentOptions.backgroundOptions.color = 'transparent';
+        if (bgColorGroup) bgColorGroup.classList.add('hidden');
     } else {
         currentOptions.backgroundOptions.color = document.getElementById('bg-color').value;
+        if (bgColorGroup) bgColorGroup.classList.remove('hidden');
     }
     deselectPreset();
     updateQR();
