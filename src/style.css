@@ -139,10 +139,7 @@ body::before {
   font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: -0.02em;
-  background: linear-gradient(135deg, var(--text-primary), var(--accent));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--text-primary);
 }
 
 .badge {
@@ -1242,6 +1239,16 @@ input[type="range"]::-moz-range-thumb {
   font-size: 0.82rem;
   line-height: 1.6;
   margin-bottom: 10px;
+}
+
+.modal-body ul {
+  padding-left: 18px;
+  margin-top: 6px;
+  list-style-type: disc;
+}
+
+.modal-body ul li {
+  margin-bottom: 4px;
 }
 
 .modal-body strong {
