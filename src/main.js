@@ -216,10 +216,43 @@ document.querySelectorAll('.section-header').forEach(header => {
 
 // ── Content Input ───────────────────────────────────────────
 const dataInput = document.getElementById('qr-data');
+const charCounterFill = document.getElementById('char-counter-fill');
+const charCounterText = document.getElementById('char-counter-text');
+
+// Max byte capacity per error correction level (binary/UTF-8 mode)
+const EC_LIMITS = { L: 2953, M: 2331, Q: 1663, H: 1273 };
+
+function updateCharCounter() {
+    const len = new Blob([dataInput.value]).size; // byte length for UTF-8
+    const ecLevel = currentOptions.qrOptions.errorCorrectionLevel || 'Q';
+    const max = EC_LIMITS[ecLevel] || 1663;
+    const pct = Math.min((len / max) * 100, 100);
+
+    charCounterFill.style.width = pct + '%';
+    charCounterFill.classList.remove('warn', 'danger');
+    charCounterText.classList.remove('warn', 'danger');
+
+    if (len > max) {
+        charCounterFill.classList.add('danger');
+        charCounterText.classList.add('danger');
+        charCounterText.textContent = `${len} / ${max} bytes — too long!`;
+    } else if (pct >= 75) {
+        charCounterFill.classList.add('warn');
+        charCounterText.classList.add('warn');
+        charCounterText.textContent = `${len} / ${max} bytes`;
+    } else {
+        charCounterText.textContent = `${len} characters`;
+    }
+}
+
 dataInput.addEventListener('input', () => {
     currentOptions.data = dataInput.value || 'https://example.com';
+    updateCharCounter();
     updateQR();
 });
+
+// Initial counter
+updateCharCounter();
 
 // ── Presets ──────────────────────────────────────────────────
 document.querySelectorAll('.preset-btn').forEach(btn => {
@@ -587,6 +620,7 @@ document.querySelectorAll('.ec-btn').forEach(btn => {
         document.querySelectorAll('.ec-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentOptions.qrOptions.errorCorrectionLevel = btn.dataset.value;
+        updateCharCounter();
         updateQR();
     });
 });

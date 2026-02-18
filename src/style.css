@@ -1074,6 +1074,53 @@ input[type="range"]::-moz-range-thumb {
   margin-bottom: 14px;
 }
 
+/* ---------- Character Counter ---------- */
+.char-counter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.char-counter-bar {
+  flex: 1;
+  height: 3px;
+  background: var(--bg-input);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.char-counter-fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 2px;
+  background: var(--accent);
+  transition: width 0.25s ease, background 0.25s ease;
+}
+
+.char-counter-fill.warn {
+  background: #f59e0b;
+}
+
+.char-counter-fill.danger {
+  background: #ef4444;
+}
+
+.char-counter-text {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  white-space: nowrap;
+  min-width: fit-content;
+}
+
+.char-counter-text.warn {
+  color: #f59e0b;
+}
+
+.char-counter-text.danger {
+  color: #ef4444;
+}
+
 .transparent-toggle-btn {
   display: flex;
   align-items: center;
