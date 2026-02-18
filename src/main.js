@@ -634,3 +634,39 @@ function syncStyleGrid(gridId, activeValue) {
         btn.classList.toggle('active', btn.dataset.value === activeValue);
     });
 }
+
+// ── Footer Year ─────────────────────────────────────────────
+const footerYear = document.getElementById('footer-year');
+if (footerYear) footerYear.textContent = new Date().getFullYear();
+
+// ── Modal Logic ─────────────────────────────────────────────
+function setupModal(linkId, modalId, closeId) {
+    const link = document.getElementById(linkId);
+    const modal = document.getElementById(modalId);
+    const close = document.getElementById(closeId);
+    if (!link || !modal) return;
+
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        modal.classList.remove('hidden');
+    });
+
+    if (close) {
+        close.addEventListener('click', () => modal.classList.add('hidden'));
+    }
+
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) modal.classList.add('hidden');
+    });
+}
+
+setupModal('terms-link', 'terms-modal', 'terms-close');
+setupModal('privacy-link', 'privacy-modal', 'privacy-close');
+
+// ── Right-click Protection ──────────────────────────────────
+document.addEventListener('contextmenu', (e) => {
+    // Allow right-click on inputs for paste, but block on the app itself
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    e.preventDefault();
+});
+
