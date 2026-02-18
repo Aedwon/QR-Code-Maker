@@ -84,6 +84,7 @@ let currentOptions = {
     },
     imageOptions: {
         crossOrigin: 'anonymous',
+        hideBackgroundDots: true,
         margin: 5,
         imageSize: 0.4,
     },
