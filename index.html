@@ -432,6 +432,38 @@
               <input type="range" id="logo-margin" min="0" max="20" step="1" value="5" />
               <span class="range-value" id="logo-margin-val">5px</span>
             </div>
+            <div class="color-group hidden" id="logo-bg-group">
+              <label>Logo Background</label>
+              <div class="color-controls">
+                <div class="logo-shape-grid">
+                  <button class="style-btn active" data-value="none" title="None (Transparent)">
+                    <svg viewBox="0 0 24 24">
+                      <line x1="4" y1="4" x2="20" y2="20" stroke="currentColor" stroke-width="2" />
+                      <line x1="20" y1="4" x2="4" y2="20" stroke="currentColor" stroke-width="2" />
+                    </svg>
+                  </button>
+                  <button class="style-btn" data-value="circle" title="Circle">
+                    <svg viewBox="0 0 24 24">
+                      <circle cx="12" cy="12" r="9" fill="currentColor" />
+                    </svg>
+                  </button>
+                  <button class="style-btn" data-value="square" title="Square">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="4" y="4" width="16" height="16" fill="currentColor" />
+                    </svg>
+                  </button>
+                  <button class="style-btn" data-value="rounded" title="Rounded Square">
+                    <svg viewBox="0 0 24 24">
+                      <rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor" />
+                    </svg>
+                  </button>
+                </div>
+                <div class="color-row hidden" id="logo-bg-color-row">
+                  <input type="color" id="logo-bg-color" value="#FFFFFF" class="color-input" />
+                  <input type="text" id="logo-bg-color-hex" value="#FFFFFF" class="hex-input" />
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 

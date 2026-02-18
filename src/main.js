@@ -91,6 +91,9 @@ let currentOptions = {
 };
 
 let logoDataUrl = null;
+let logoOriginalDataUrl = null; // original unmodified logo
+let logoBgShape = 'none'; // none | circle | square | rounded
+let logoBgColor = '#FFFFFF';
 let debounceTimer = null;
 let skipPresetDeselect = false;
 
@@ -141,6 +144,60 @@ function buildOptions() {
     }
 
     return opts;
+}
+
+// ── Logo Compositing ────────────────────────────────────────
+function compositeLogoWithBackground() {
+    if (!logoOriginalDataUrl || logoBgShape === 'none') {
+        logoDataUrl = logoOriginalDataUrl;
+        return Promise.resolve();
+    }
+
+    return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => {
+            const padding = 0.15; // 15% padding around the logo
+            const size = Math.max(img.width, img.height);
+            const canvasSize = Math.round(size * (1 + padding * 2));
+            const canvas = document.createElement('canvas');
+            canvas.width = canvasSize;
+            canvas.height = canvasSize;
+            const ctx = canvas.getContext('2d');
+
+            // Draw background shape
+            ctx.fillStyle = logoBgColor;
+            if (logoBgShape === 'circle') {
+                ctx.beginPath();
+                ctx.arc(canvasSize / 2, canvasSize / 2, canvasSize / 2, 0, Math.PI * 2);
+                ctx.fill();
+            } else if (logoBgShape === 'square') {
+                ctx.fillRect(0, 0, canvasSize, canvasSize);
+            } else if (logoBgShape === 'rounded') {
+                const r = canvasSize * 0.15;
+                ctx.beginPath();
+                ctx.moveTo(r, 0);
+                ctx.lineTo(canvasSize - r, 0);
+                ctx.quadraticCurveTo(canvasSize, 0, canvasSize, r);
+                ctx.lineTo(canvasSize, canvasSize - r);
+                ctx.quadraticCurveTo(canvasSize, canvasSize, canvasSize - r, canvasSize);
+                ctx.lineTo(r, canvasSize);
+                ctx.quadraticCurveTo(0, canvasSize, 0, canvasSize - r);
+                ctx.lineTo(0, r);
+                ctx.quadraticCurveTo(0, 0, r, 0);
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            // Draw logo centered
+            const offsetX = (canvasSize - img.width) / 2;
+            const offsetY = (canvasSize - img.height) / 2;
+            ctx.drawImage(img, offsetX, offsetY);
+
+            logoDataUrl = canvas.toDataURL('image/png');
+            resolve();
+        };
+        img.src = logoOriginalDataUrl;
+    });
 }
 
 // ── Section Collapsing ──────────────────────────────────────
@@ -436,30 +493,40 @@ logoUpload.addEventListener('change', (e) => {
     if (typeof gtag === 'function') gtag('event', 'upload_logo');
     const reader = new FileReader();
     reader.onload = (evt) => {
-        logoDataUrl = evt.target.result;
+        logoOriginalDataUrl = evt.target.result;
+        logoDataUrl = logoOriginalDataUrl;
         logoUploadArea.classList.add('has-logo');
         logoUploadText.textContent = file.name;
         logoRemoveBtn.classList.remove('hidden');
         logoOptionsEl.classList.remove('hidden');
         logoMarginGroup.classList.remove('hidden');
+        document.getElementById('logo-bg-group').classList.remove('hidden');
 
         // Boost error correction when using a logo
         currentOptions.qrOptions.errorCorrectionLevel = 'H';
         syncECButtons('H');
 
-        updateQR();
+        compositeLogoWithBackground().then(() => updateQR());
     };
     reader.readAsDataURL(file);
 });
 
 logoRemoveBtn.addEventListener('click', () => {
     logoDataUrl = null;
+    logoOriginalDataUrl = null;
     logoUpload.value = '';
     logoUploadArea.classList.remove('has-logo');
     logoUploadText.textContent = 'Click to upload a logo';
     logoRemoveBtn.classList.add('hidden');
     logoOptionsEl.classList.add('hidden');
     logoMarginGroup.classList.add('hidden');
+    document.getElementById('logo-bg-group').classList.add('hidden');
+
+    // Reset logo bg shape
+    logoBgShape = 'none';
+    document.querySelectorAll('.logo-shape-grid .style-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector('.logo-shape-grid .style-btn[data-value="none"]').classList.add('active');
+    document.getElementById('logo-bg-color-row').classList.add('hidden');
 
     // Reset error correction back to Q (was boosted to H for logo)
     currentOptions.qrOptions.errorCorrectionLevel = 'Q';
@@ -477,6 +544,30 @@ setupRange('logo-margin', 'logo-margin-val', (val) => {
     currentOptions.imageOptions.margin = parseInt(val);
     updateQR();
 }, 'px');
+
+// Logo background shape
+document.querySelectorAll('.logo-shape-grid .style-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelectorAll('.logo-shape-grid .style-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        logoBgShape = btn.dataset.value;
+
+        const colorRow = document.getElementById('logo-bg-color-row');
+        if (logoBgShape === 'none') {
+            colorRow.classList.add('hidden');
+        } else {
+            colorRow.classList.remove('hidden');
+        }
+
+        compositeLogoWithBackground().then(() => updateQR());
+    });
+});
+
+// Logo background color
+setupColorPair('logo-bg-color', 'logo-bg-color-hex', (color) => {
+    logoBgColor = color;
+    compositeLogoWithBackground().then(() => updateQR());
+});
 
 // ── Settings Controls ───────────────────────────────────────
 setupRange('qr-size', 'qr-size-val', (val) => {
