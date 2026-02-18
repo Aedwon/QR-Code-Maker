@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>QR Code Generator & Editor</title>
+  <meta name="description" content="Create stunning, fully customizable QR codes with custom colors, patterns, gradients, and embedded logos. Export as PNG, SVG, or JPEG." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <div class="app">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <div class="logo-icon">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="3" height="3"/>
+            <rect x="18" y="18" width="3" height="3"/>
+            <rect x="18" y="14" width="3" height="1"/>
+            <rect x="14" y="18" width="1" height="3"/>
+          </svg>
+        </div>
+        <h1>QR Studio</h1>
+      </div>
+      <div class="header-right">
+        <span class="badge">v1.0</span>
+      </div>
+    </header>
+
+    <main class="main">
+      <!-- Sidebar Controls -->
+      <aside class="sidebar" id="sidebar">
+        <!-- Content Section -->
+        <section class="control-section" data-section="content">
+          <button class="section-header" aria-expanded="true">
+            <div class="section-title">
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+              <span>Content</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="section-body">
+            <div class="input-group">
+              <label for="qr-data">URL or Text</label>
+              <textarea id="qr-data" rows="3" placeholder="https://example.com">https://example.com</textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- Presets Section -->
+        <section class="control-section" data-section="presets">
+          <button class="section-header" aria-expanded="true">
+            <div class="section-title">
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span>Presets</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="section-body">
+            <div class="preset-grid">
+              <button class="preset-btn active" data-preset="classic" title="Classic">
+                <div class="preset-preview preset-classic"></div>
+                <span>Classic</span>
+              </button>
+              <button class="preset-btn" data-preset="rounded" title="Rounded">
+                <div class="preset-preview preset-rounded"></div>
+                <span>Rounded</span>
+              </button>
+              <button class="preset-btn" data-preset="dots" title="Dots">
+                <div class="preset-preview preset-dots"></div>
+                <span>Dots</span>
+              </button>
+              <button class="preset-btn" data-preset="classy" title="Classy">
+                <div class="preset-preview preset-classy"></div>
+                <span>Classy</span>
+              </button>
+              <button class="preset-btn" data-preset="elegant" title="Elegant">
+                <div class="preset-preview preset-elegant"></div>
+                <span>Elegant</span>
+              </button>
+              <button class="preset-btn" data-preset="neon" title="Neon">
+                <div class="preset-preview preset-neon"></div>
+                <span>Neon</span>
+              </button>
+              <button class="preset-btn" data-preset="ocean" title="Ocean">
+                <div class="preset-preview preset-ocean"></div>
+                <span>Ocean</span>
+              </button>
+              <button class="preset-btn" data-preset="sunset" title="Sunset">
+                <div class="preset-preview preset-sunset"></div>
+                <span>Sunset</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Dot Style Section -->
+        <section class="control-section" data-section="dots">
+          <button class="section-header" aria-expanded="false">
+            <div class="section-title">
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><circle cx="5" cy="5" r="2"/><circle cx="19" cy="5" r="2"/><circle cx="5" cy="19" r="2"/><circle cx="19" cy="19" r="2"/></svg>
+              <span>Dot Style</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="section-body collapsed">
+            <div class="style-grid" id="dot-style-grid">
+              <button class="style-btn active" data-value="square" title="Square">
+                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" fill="currentColor"/></svg>
+              </button>
+              <button class="style-btn" data-value="dots" title="Dots">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="8" fill="currentColor"/></svg>
+              </button>
+              <button class="style-btn" data-value="rounded" title="Rounded">
+                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="4" fill="currentColor"/></svg>
+              </button>
+              <button class="style-btn" data-value="extra-rounded" title="Extra Rounded">
+                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="7" fill="currentColor"/></svg>
+              </button>
+              <button class="style-btn" data-value="classy" title="Classy">
+                <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z" fill="currentColor"/><circle cx="4" cy="4" r="3" fill="var(--bg-primary)"/></svg>
+              </button>
+              <button class="style-btn" data-value="classy-rounded" title="Classy Rounded">
+                <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3" fill="currentColor"/><circle cx="4" cy="4" r="4" fill="var(--bg-primary)"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Corner Square Style Section -->
+        <section class="control-section" data-section="cornerSquare">
+          <button class="section-header" aria-expanded="false">
+            <div class="section-title">
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><rect x="7" y="7" width="10" height="10" rx="1"/></svg>
+              <span>Corner Square</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="section-body collapsed">
+            <div class="style-grid" id="corner-square-style-grid">
+              <button class="style-btn active" data-value="square" title="Square">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" stroke="currentColor" stroke-width="3" fill="none"/></svg>
+              </button>
+              <button class="style-btn" data-value="dot" title="Dot">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="3" fill="none"/></svg>
+              </button>
+              <button class="style-btn" data-value="extra-rounded" title="Extra Rounded">
+                <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="6" stroke="currentColor" stroke-width="3" fill="none"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Corner Dot Style Section -->
+        <section class="control-section" data-section="cornerDot">
+          <button class="section-header" aria-expanded="false">
+            <div class="section-title">
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+              <span>Corner Dot</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="section-body collapsed">
+            <div class="style-grid" id="corner-dot-style-grid">
+              <button class="style-btn active" data-value="square" title="Square">
+                <svg viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" fill="currentColor"/></svg>
+              </button>
+              <button class="style-btn" data-value="dot" title="Dot">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="6" fill="currentColor"/></svg>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Colors Section -->
+        <section class="control-section" data-section="colors">
+          <button class="section-header" aria-expanded="false">
+            <div class="section-title">
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+              <span>Colors</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="section-body collapsed">
+            <!-- Dot Color -->
+            <div class="color-group">
+              <label>Dot Color</label>
+              <div class="color-controls">
+                <div class="color-row">
+                  <input type="color" id="dot-color" value="#000000" class="color-input" />
+                  <input type="text" id="dot-color-hex" value="#000000" class="hex-input" />
+                </div>
+                <div class="toggle-row">
+                  <label class="toggle-label" for="dot-gradient-toggle">Gradient</label>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="dot-gradient-toggle" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="gradient-controls hidden" id="dot-gradient-controls">
+                  <div class="color-row">
+                    <label>End Color</label>
+                    <input type="color" id="dot-color-2" value="#4A90D9" class="color-input" />
+                    <input type="text" id="dot-color-2-hex" value="#4A90D9" class="hex-input" />
+                  </div>
+                  <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="dot-gradient-type" value="linear" checked /> Linear</label>
+                    <label class="radio-label"><input type="radio" name="dot-gradient-type" value="radial" /> Radial</label>
+                  </div>
+                  <div class="input-group">
+                    <label for="dot-gradient-rotation">Rotation</label>
+                    <input type="range" id="dot-gradient-rotation" min="0" max="360" value="0" />
+                    <span class="range-value" id="dot-gradient-rotation-val">0°</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Corner Square Color -->
+            <div class="color-group">
+              <label>Corner Square Color</label>
+              <div class="color-controls">
+                <div class="color-row">
+                  <input type="color" id="corner-square-color" value="#000000" class="color-input" />
+                  <input type="text" id="corner-square-color-hex" value="#000000" class="hex-input" />
+                </div>
+                <div class="toggle-row">
+                  <label class="toggle-label" for="cs-gradient-toggle">Gradient</label>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="cs-gradient-toggle" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="gradient-controls hidden" id="cs-gradient-controls">
+                  <div class="color-row">
+                    <label>End Color</label>
+                    <input type="color" id="corner-square-color-2" value="#4A90D9" class="color-input" />
+                    <input type="text" id="corner-square-color-2-hex" value="#4A90D9" class="hex-input" />
+                  </div>
+                  <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="cs-gradient-type" value="linear" checked /> Linear</label>
+                    <label class="radio-label"><input type="radio" name="cs-gradient-type" value="radial" /> Radial</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Corner Dot Color -->
+            <div class="color-group">
+              <label>Corner Dot Color</label>
+              <div class="color-controls">
+                <div class="color-row">
+                  <input type="color" id="corner-dot-color" value="#000000" class="color-input" />
+                  <input type="text" id="corner-dot-color-hex" value="#000000" class="hex-input" />
+                </div>
+                <div class="toggle-row">
+                  <label class="toggle-label" for="cd-gradient-toggle">Gradient</label>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="cd-gradient-toggle" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+                <div class="gradient-controls hidden" id="cd-gradient-controls">
+                  <div class="color-row">
+                    <label>End Color</label>
+                    <input type="color" id="corner-dot-color-2" value="#4A90D9" class="color-input" />
+                    <input type="text" id="corner-dot-color-2-hex" value="#4A90D9" class="hex-input" />
+                  </div>
+                  <div class="radio-group">
+                    <label class="radio-label"><input type="radio" name="cd-gradient-type" value="linear" checked /> Linear</label>
+                    <label class="radio-label"><input type="radio" name="cd-gradient-type" value="radial" /> Radial</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Background Color -->
+            <div class="color-group">
+              <label>Background</label>
+              <div class="color-controls">
+                <div class="color-row">
+                  <input type="color" id="bg-color" value="#FFFFFF" class="color-input" />
+                  <input type="text" id="bg-color-hex" value="#FFFFFF" class="hex-input" />
+                </div>
+                <div class="toggle-row">
+                  <label class="toggle-label" for="bg-transparent">Transparent</label>
+                  <label class="toggle-switch">
+                    <input type="checkbox" id="bg-transparent" />
+                    <span class="toggle-slider"></span>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Logo Section -->
+        <section class="control-section" data-section="logo">
+          <button class="section-header" aria-expanded="false">
+            <div class="section-title">
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <span>Logo / Image</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="section-body collapsed">
+            <div class="input-group">
+              <label class="file-upload" id="logo-upload-area">
+                <input type="file" id="logo-upload" accept="image/*" hidden />
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                <span id="logo-upload-text">Click to upload a logo</span>
+              </label>
+              <button class="btn-sm btn-danger hidden" id="logo-remove">Remove Logo</button>
+            </div>
+            <div class="input-group hidden" id="logo-options">
+              <label for="logo-size">Logo Size</label>
+              <input type="range" id="logo-size" min="0.1" max="0.5" step="0.02" value="0.4" />
+              <span class="range-value" id="logo-size-val">0.4</span>
+            </div>
+            <div class="input-group hidden" id="logo-margin-group">
+              <label for="logo-margin">Logo Margin</label>
+              <input type="range" id="logo-margin" min="0" max="20" step="1" value="5" />
+              <span class="range-value" id="logo-margin-val">5px</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section class="control-section" data-section="settings">
+          <button class="section-header" aria-expanded="false">
+            <div class="section-title">
+              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+              <span>Settings</span>
+            </div>
+            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="section-body collapsed">
+            <div class="input-group">
+              <label for="qr-size">QR Code Size</label>
+              <input type="range" id="qr-size" min="150" max="600" step="10" value="300" />
+              <span class="range-value" id="qr-size-val">300px</span>
+            </div>
+            <div class="input-group">
+              <label for="qr-margin">Quiet Zone (Margin)</label>
+              <input type="range" id="qr-margin" min="0" max="50" step="1" value="10" />
+              <span class="range-value" id="qr-margin-val">10px</span>
+            </div>
+            <div class="input-group">
+              <label>Error Correction</label>
+              <div class="ec-grid">
+                <button class="ec-btn" data-value="L" title="Low (~7% recovery)">L</button>
+                <button class="ec-btn" data-value="M" title="Medium (~15% recovery)">M</button>
+                <button class="ec-btn active" data-value="Q" title="Quartile (~25% recovery)">Q</button>
+                <button class="ec-btn" data-value="H" title="High (~30% recovery)">H</button>
+              </div>
+              <p class="hint">Higher = more damage resistant, denser code. Use Q or H when adding a logo.</p>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <!-- Preview Panel -->
+      <section class="preview-panel">
+        <div class="preview-container">
+          <div class="preview-card">
+            <div id="qr-preview" class="qr-preview"></div>
+          </div>
+          <div class="export-bar">
+            <button class="export-btn" id="export-png">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              PNG
+            </button>
+            <button class="export-btn" id="export-svg">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              SVG
+            </button>
+            <button class="export-btn" id="export-jpeg">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              JPEG
+            </button>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
