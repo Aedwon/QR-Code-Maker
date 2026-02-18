@@ -4,6 +4,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC9VK5QNNX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-PC9VK5QNNX');
+  </script>
   <title>QR Studio by Aedwon</title>
   <meta name="description"
     content="Create stunning, fully customizable QR codes with custom colors, patterns, gradients, and embedded logos. Export as PNG, SVG, or JPEG." />
@@ -506,11 +515,13 @@
     <!-- Footer -->
     <footer class="site-footer">
       <div class="footer-content">
-        <p class="footer-copyright">&copy; 2024&ndash;<span id="footer-year"></span> Aedwon. All rights reserved.</p>
+        <p class="footer-copyright">&copy; <span id="footer-year"></span> Aedwon. All rights reserved.</p>
         <div class="footer-links">
           <a href="#" id="terms-link">Terms of Use</a>
           <span class="footer-sep">&middot;</span>
           <a href="#" id="privacy-link">Privacy Policy</a>
+          <span class="footer-sep">&middot;</span>
+          <a href="#" id="feedback-link">Send Feedback</a>
         </div>
         <p class="footer-notice">Unauthorized reproduction, redistribution, or resale of this application or its
           generated content for commercial purposes without explicit permission from Aedwon is strictly prohibited.</p>
@@ -573,16 +584,20 @@
       <div class="modal-body">
         <p><strong>Last updated:</strong> February 2026</p>
         <p>QR Studio by Aedwon (&ldquo;the Service&rdquo;) is committed to protecting your privacy. This policy explains
-          what data we collect (or rather, what we don&rsquo;t).</p>
+          what data we collect and how it is used.</p>
         <ol>
-          <li><strong>No Personal Data Collection.</strong> QR Studio does not collect, store, or transmit any personal
-            information. All QR code generation and customization happens entirely within your web browser using
-            client-side JavaScript. No data ever leaves your device.</li>
-          <li><strong>No Cookies or Tracking.</strong> The Service does not use cookies, local storage for tracking, web
-            beacons, pixels, or any other tracking technologies. We do not track your browsing behavior or usage
-            patterns.</li>
-          <li><strong>No Third-Party Analytics.</strong> We do not integrate any third-party analytics services such as
-            Google Analytics, Mixpanel, or similar tools. Your usage of QR Studio is completely private.</li>
+          <li><strong>QR Code Generation.</strong> All QR code generation and customization happens entirely within your
+            web browser using client-side JavaScript. The data you enter (URLs, text, etc.) never leaves your
+            device.</li>
+          <li><strong>Analytics.</strong> We use Google Analytics (GA4) to understand how the Service is used. Google
+            Analytics collects anonymized usage data such as pages visited, actions taken, browser type, and general
+            geographic region. This data is aggregated and cannot be used to personally identify you. You can opt out by
+            installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google
+              Analytics Opt-out Browser Add-on</a>.</li>
+          <li><strong>Feedback Submissions.</strong> If you choose to submit feedback through the in-app form, your
+            message and the name you optionally provide are sent via a third-party form service (Web3Forms) and
+            forwarded
+            to Aedwon via email. No other personal data is collected or stored from feedback submissions.</li>
           <li><strong>Uploaded Images.</strong> Any logos or images you upload for embedding in QR codes are processed
             entirely in your browser&rsquo;s memory. They are never uploaded to any server, stored in any database, or
             shared with any third party. Images are discarded when you close or refresh the page.</li>
@@ -594,8 +609,46 @@
           <li><strong>Changes to This Policy.</strong> We may update this Privacy Policy from time to time. Changes will
             be reflected by the &ldquo;Last updated&rdquo; date at the top of this policy.</li>
         </ol>
-        <p>If you have questions about this policy, you may contact Aedwon through the channels listed on the official
-          website.</p>
+        <p>If you have questions about this policy, you may contact Aedwon through the feedback form or channels listed
+          on the official website.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Feedback Modal -->
+  <div class="modal-overlay hidden" id="feedback-modal">
+    <div class="modal-card">
+      <button class="modal-close" id="feedback-close">&times;</button>
+      <h2>Send Feedback</h2>
+      <div class="modal-body">
+        <p>Have a suggestion, found a bug, or just want to say hello? We&rsquo;d love to hear from you.</p>
+        <form id="feedback-form" action="https://api.web3forms.com/submit" method="POST">
+          <input type="hidden" name="access_key" value="0bcf6f1e-c50e-4cde-a98b-8c0224a4207b" />
+          <input type="hidden" name="subject" value="QR Studio Feedback" />
+          <input type="hidden" name="from_name" value="QR Studio Feedback Form" />
+          <!-- Honeypot spam protection -->
+          <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
+          <div class="form-group">
+            <label for="feedback-name">Name <span class="optional">(optional)</span></label>
+            <input type="text" id="feedback-name" name="name" placeholder="Your name" class="form-input" />
+          </div>
+          <div class="form-group">
+            <label for="feedback-type">Feedback Type</label>
+            <select id="feedback-type" name="type" class="form-input">
+              <option value="suggestion">Suggestion</option>
+              <option value="bug">Bug Report</option>
+              <option value="feature">Feature Request</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="feedback-message">Message</label>
+            <textarea id="feedback-message" name="message" placeholder="Tell us what you think..." rows="4"
+              class="form-input" required></textarea>
+          </div>
+          <button type="submit" class="feedback-submit-btn" id="feedback-submit">Send Feedback</button>
+          <p class="feedback-status hidden" id="feedback-status"></p>
+        </form>
       </div>
     </div>
   </div>

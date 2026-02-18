@@ -192,6 +192,7 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
         skipPresetDeselect = false;
 
         updateQR();
+        if (typeof gtag === 'function') gtag('event', 'select_preset', { preset_name: btn.dataset.preset });
     });
 });
 
@@ -431,6 +432,7 @@ const logoMarginGroup = document.getElementById('logo-margin-group');
 logoUpload.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    if (typeof gtag === 'function') gtag('event', 'upload_logo');
     const reader = new FileReader();
     reader.onload = (evt) => {
         logoDataUrl = evt.target.result;
@@ -500,14 +502,17 @@ document.querySelectorAll('.ec-btn').forEach(btn => {
 // ── Export ───────────────────────────────────────────────────
 document.getElementById('export-png').addEventListener('click', () => {
     qrCode.download({ name: 'qr-code', extension: 'png' });
+    if (typeof gtag === 'function') gtag('event', 'export_qr', { format: 'png' });
 });
 
 document.getElementById('export-svg').addEventListener('click', () => {
     qrCode.download({ name: 'qr-code', extension: 'svg' });
+    if (typeof gtag === 'function') gtag('event', 'export_qr', { format: 'svg' });
 });
 
 document.getElementById('export-jpeg').addEventListener('click', () => {
     qrCode.download({ name: 'qr-code', extension: 'jpeg' });
+    if (typeof gtag === 'function') gtag('event', 'export_qr', { format: 'jpeg' });
 });
 
 // ── Helpers ─────────────────────────────────────────────────
@@ -665,6 +670,49 @@ function setupModal(linkId, modalId, closeId) {
 
 setupModal('terms-link', 'terms-modal', 'terms-close');
 setupModal('privacy-link', 'privacy-modal', 'privacy-close');
+setupModal('feedback-link', 'feedback-modal', 'feedback-close');
+
+// ── Feedback Form (AJAX) ────────────────────────────────────
+const feedbackForm = document.getElementById('feedback-form');
+if (feedbackForm) {
+    feedbackForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = document.getElementById('feedback-submit');
+        const status = document.getElementById('feedback-status');
+        const originalText = submitBtn.textContent;
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Sending...';
+        status.classList.add('hidden');
+        status.className = 'feedback-status hidden';
+
+        try {
+            const formData = new FormData(feedbackForm);
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                body: formData,
+            });
+            const result = await response.json();
+
+            if (result.success) {
+                status.textContent = 'Thank you! Your feedback has been sent.';
+                status.classList.remove('hidden');
+                status.classList.add('success');
+                feedbackForm.reset();
+                if (typeof gtag === 'function') gtag('event', 'feedback_submitted', { type: formData.get('type') });
+            } else {
+                throw new Error(result.message || 'Submission failed');
+            }
+        } catch (err) {
+            status.textContent = 'Something went wrong. Please try again.';
+            status.classList.remove('hidden');
+            status.classList.add('error');
+        }
+
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+    });
+}
 
 // ── Right-click Protection ──────────────────────────────────
 document.addEventListener('contextmenu', (e) => {
@@ -672,4 +720,3 @@ document.addEventListener('contextmenu', (e) => {
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     e.preventDefault();
 });
-
