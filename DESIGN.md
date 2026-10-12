@@ -4,6 +4,8 @@
 
 This document defines the product's design philosophy and interaction principles. It intentionally does **not** prescribe page structure, content hierarchy, navigation model, control placement, or a specific visual layout. Those decisions should be made separately while remaining consistent with the principles below.
 
+Where this document draws from Apple's Human Interface Guidelines, it adopts **interaction and usability principles only**. It does not prescribe Apple-specific visual styling, component appearance, platform conventions, or imitation of Apple's interface aesthetic.
+
 ## Core Philosophy
 
 QR Studio should feel **clear, calm, immediate, and trustworthy**. The interface should make a capable QR tool feel simple without reducing what advanced users can do.
@@ -127,6 +129,58 @@ Explanatory text should appear when it changes a user's decision or prevents con
 Do not force a tradeoff between simplicity and capability. Beginners should be able to complete the primary task through obvious controls, while experienced users should be able to reach detailed settings quickly.
 
 The interface should become more powerful as users look deeper, not more confusing as soon as they arrive.
+
+## Apple HIG-Derived Principles
+
+The following principles adapt relevant ideas from Apple's Human Interface Guidelines to QR Studio's web context. They reinforce the principles above and should be interpreted independently of Apple's visual style.
+
+### Agency and forgiveness
+
+Users should remain in control of their work. The interface should make experimentation safe, keep consequential actions understandable, and provide practical ways to reverse, reset, or recover from changes.
+
+Avoid workflows that trap users in a state, make silent decisions on their behalf, or punish exploration.
+
+### Clear hierarchy and purposeful emphasis
+
+Importance should be communicated through hierarchy, grouping, contrast, and timing rather than by making everything prominent.
+
+Primary actions, current state, warnings, and secondary options should be distinguishable without requiring users to study the interface.
+
+### Familiarity before invention
+
+Prefer interaction patterns that users already understand when they solve the problem well. Custom interaction models should earn their complexity by providing a substantial usability benefit.
+
+A familiar control used well is preferable to a novel control that requires explanation.
+
+### Feedback should match the consequence
+
+Every meaningful action should produce appropriate feedback, but feedback should not be more disruptive than the action warrants.
+
+Use lightweight state changes for routine interactions and reserve interruption for errors, risk, or decisions that genuinely require attention.
+
+### Clear, action-oriented language
+
+Labels, instructions, status messages, and errors should describe what users can do, what happened, or what needs attention in plain language.
+
+Avoid unnecessary technical terminology, vague labels, and explanatory copy that does not help users make a decision or complete a task.
+
+### Discoverability without permanent clutter
+
+Important capabilities should be findable without forcing every option to remain visible at all times.
+
+Use progressive disclosure, contextual controls, sensible grouping, and strong defaults so the interface can remain simple while preserving depth.
+
+### Input method independence
+
+Core tasks should remain understandable and operable across pointer, keyboard, and touch input. No essential interaction should depend on hover alone, precise pointer movement, gesture discovery, or visual state alone.
+
+Interactive targets should be comfortably usable, focus should be visible, and equivalent paths should exist where an input method cannot support a particular interaction naturally.
+
+### Transparency builds trust
+
+When the product performs automation, analytics, file handling, image processing, or any behavior that may affect user expectations, the interface should communicate that behavior accurately and proportionately.
+
+Do not use reassurance as a substitute for transparency. Users should be able to understand what the product is doing and retain meaningful control where it matters.
 
 ## Interaction Quality Bar
 
