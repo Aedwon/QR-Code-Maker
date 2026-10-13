@@ -31,6 +31,23 @@ On desktop:
 
 Use spacing, radii, border, shadow, color, and texture values from `DESIGN-TOKENS.md`.
 
+## Redundancy Rule
+
+Avoid duplicating controls or navigation concepts across the interface unless the duplicate has a clear, distinct convenience purpose.
+
+Each concept should have one canonical home:
+
+- Content type selection (`Text`, `Link`, `Contact`, `Wi-Fi`, `More`) belongs only in the top-middle workspace selector.
+- Top-level customization areas (`Style`, `Colors`, `Logo`, `Scan Quality`, `Output`) belong only in the left navigation.
+- Feature-specific configuration belongs in the right inspector.
+- Theme selection belongs in the persistent utility area.
+
+Do not repeat the content-type selector in the left sidebar. The top-middle selector already performs that job, so duplicating it in navigation adds noise and creates two competing mental models for the same action.
+
+Exceptions must be intentional shortcuts rather than parallel navigation. The pinned-controls dock and the persistent `Download PNG` quick action are valid because they provide faster access to existing settings/actions while preserving a single underlying state and canonical location.
+
+When a proposed element appears in more than one place, first ask whether the second instance materially reduces effort. If not, remove it.
+
 ## Left Navigation Panel
 
 The left panel is the app's persistent top-level navigation. Its structure should remain stable while the user works.
@@ -54,7 +71,7 @@ Use user-facing language, not internal implementation terminology:
 
 These labels are navigation concepts. Internal feature names may differ.
 
-Do not add content-type choices such as Text, Link, Contact, or Wi-Fi to this sidebar. Those belong to the workspace content selector.
+Do not add content-type choices such as Text, Link, Contact, or Wi-Fi to this sidebar. Those belong exclusively to the workspace content selector.
 
 ### Secondary items
 
@@ -103,6 +120,8 @@ Expected primary choices:
 
 The selector may use a segmented-control treatment. `More` may reveal less common supported content types.
 
+This selector is the **only** primary location for choosing content type. Do not mirror these choices in the left navigation or right inspector.
+
 ### Morphing content input
 
 The input area changes according to the selected content type.
@@ -131,7 +150,7 @@ The QR preview is the visual center of gravity.
 
 A `Download PNG` action may remain immediately available beneath or near the preview even when another feature is selected in the inspector.
 
-This is a convenience action. Detailed export settings belong under the `Output` inspector section.
+This is a deliberate convenience shortcut, not a second export-navigation system. Detailed export settings belong under the `Output` inspector section.
 
 ## Right Inspector Panel
 
@@ -156,6 +175,7 @@ The exact subfeatures are governed by product scope. Do not expose controls mere
 - Keep routine controls visible without forcing the user through accordions unnecessarily.
 - Avoid excessive nested cards.
 - Use concise user-facing labels instead of internal terminology.
+- Do not duplicate controls that already have a canonical home elsewhere unless they qualify as an explicit convenience shortcut.
 
 ## Pinned Controls
 
@@ -171,6 +191,8 @@ Users may pin frequently used subfeatures so they remain accessible without swit
 - A setting must never exist as two independent values simply because it appears both pinned and in its native section.
 - Pinned items can be reordered and unpinned.
 - Provide a compact way to collapse the pinned area when it contains multiple controls.
+
+Pinned controls are the intentional exception to the general anti-redundancy rule. They mirror an existing setting solely to reduce navigation effort, and both instances must always represent the same state.
 
 ### Pin affordance
 
@@ -281,6 +303,8 @@ Do not:
 
 - attach either sidebar visually to the viewport edge,
 - turn the left navigation into a full list of every available subfeature,
+- duplicate the top-middle content-type selector in the left sidebar,
+- mirror the same control in multiple zones without a specific shortcut rationale,
 - make the right inspector another navigation hierarchy,
 - permanently reserve a large empty pinned-feature region,
 - pin entire settings pages,
