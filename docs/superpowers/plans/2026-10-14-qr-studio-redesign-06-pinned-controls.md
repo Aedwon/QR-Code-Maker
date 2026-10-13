@@ -36,9 +36,9 @@
 - Modify: `index.html`
 
 - [ ] Give each eligible compact control group a stable `data-pin-key`.
-- [ ] Define eligibility explicitly; begin with a small useful set rather than every control.
+- [ ] Initial eligible set: module shape, primary QR color, error correction, quiet-zone/margin, and output size.
+- [ ] Do not make entire preset grids, logo upload/compositing, full gradient editors, export-format groups, navigation, theme, legal, or content-mode controls pinnable in this release.
 - [ ] Store the native parent/anchor needed to restore each control when unpinned.
-- [ ] Exclude whole sections and large upload/complex groups where pinning would make the dock unwieldy.
 - [ ] Commit.
 
 ### Task 2: Implement pin/unpin behavior
@@ -63,7 +63,7 @@
 - Modify: `src/style.css`
 - Modify: `tests/e2e/pins.spec.js`
 
-- [ ] Persist ordered pin keys under one versioned local-storage key.
+- [ ] Persist ordered pin keys under `qr-studio:pins:v1`.
 - [ ] Ignore unknown/stale keys safely after future control changes.
 - [ ] Add keyboard-accessible reorder controls; pointer drag-and-drop is optional and must not be the only path.
 - [ ] Restore pin order on startup after the inspector DOM is available.
