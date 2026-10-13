@@ -6,7 +6,7 @@ This document defines the product's design philosophy and interaction principles
 
 Where this document draws from Apple's Human Interface Guidelines, it adopts **interaction and usability principles only**. It does not prescribe Apple-specific visual styling, component appearance, platform conventions, or imitation of Apple's interface aesthetic.
 
-The implementation-level visual primitives that support this philosophy are defined in [`DESIGN-TOKENS.md`](./DESIGN-TOKENS.md). That companion specification is the canonical source for typography, spacing, semantic colors, radii, control sizing, icon sizing, borders, shadows, motion, responsive breakpoints, and component-state conventions.
+The implementation-level visual primitives that support this philosophy are defined in [`DESIGN-TOKENS.md`](./DESIGN-TOKENS.md). That companion specification is the canonical source for typography, spacing, semantic colors, radii, control sizing, icon sizing, borders, shadows, motion, responsive breakpoints, background texture, and component-state conventions.
 
 ## Core Philosophy
 
@@ -203,7 +203,7 @@ If not, the design should be reconsidered.
 
 ## Visual Direction
 
-The intended character is **minimal, clean, precise, modern, and calm**.
+The intended character is **minimal, clean, precise, modern, calm, and tactile**.
 
 Prefer:
 
@@ -214,8 +214,11 @@ Prefer:
 - deliberate contrast,
 - simple iconography,
 - subtle depth,
-- neutral surfaces with selective accent color,
+- neutral work surfaces with selective use of the canonical muted palette,
+- a restrained paper-like canvas texture with large low-contrast organic color fields behind the working interface,
 - visual emphasis proportional to importance.
+
+The textured canvas is atmosphere, not content. Cards, controls, text, and the QR preview should remain visually stable and easy to read above it.
 
 Avoid:
 
@@ -223,6 +226,7 @@ Avoid:
 - decorative glass effects that reduce clarity,
 - crowded control surfaces,
 - persistent visual noise,
+- high-contrast or busy texture behind working content,
 - excessive card nesting,
 - unclear icon-only actions,
 - animation that delays work,
