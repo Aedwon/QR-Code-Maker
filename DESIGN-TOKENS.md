@@ -14,54 +14,122 @@ These tokens are intentionally small and restrained. Components should reuse the
 - Default surfaces should remain visually quiet. Elevation and accent color should communicate hierarchy, not decoration.
 - The QR code remains the visual focus of the product.
 - Touch targets must remain at least 44px where touch interaction is expected, even when the visible control is smaller.
+- The textured canvas is part of QR Studio's visual identity. It belongs behind the interface, never inside controls or in a way that competes with the QR preview.
 
-## Color Tokens
+## Visual Identity Palette
+
+The following five colors are the canonical QR Studio identity palette. These are brand primitives, not interchangeable semantic roles.
+
+| Token | Value | Name | Role |
+| --- | --- | --- | --- |
+| `brand-copper` | `#C05746` | Rosy Copper | Primary brand color and primary action emphasis |
+| `brand-olive` | `#ADC698` | Muted Olive | Secondary brand color, supporting selections, and ambient color |
+| `brand-tea` | `#D0E3C4` | Tea Green | Soft supporting tint and ambient texture color |
+| `brand-white` | `#FFFFFF` | White | Clean work surfaces |
+| `brand-blackberry` | `#503047` | Blackberry Cream | Deep contrast color and occasional tertiary brand accent |
+
+### Derived brand tokens
+
+Derived colors may be used where interaction states require them. They should remain visually related to the five canonical colors rather than introducing unrelated saturated hues.
+
+| Token | Value | Use |
+| --- | --- | --- |
+| `primary` | `#C05746` | Primary actions, active emphasis, key focus cues |
+| `primary-hover` | `#B04B3C` | Primary hover/pressed progression |
+| `primary-soft` | `#F3D7D4` | Low-emphasis copper tint |
+| `secondary` | `#ADC698` | Supporting selection and secondary emphasis |
+| `secondary-hover` | `#98B482` | Secondary hover/pressed progression |
+| `secondary-soft` | `#E8F1DE` | Low-emphasis olive/tea tint |
+| `deep-accent` | `#503047` | Deep contrast accent; use sparingly |
+
+The primary interaction color is Rosy Copper. Muted Olive is complementary, not a competing primary CTA color. Blackberry Cream should provide depth and contrast without becoming a second dominant action color.
+
+## Semantic Color Tokens
 
 ### Light theme
 
 | Token | Value | Use |
 | --- | --- | --- |
-| `canvas` | `#FAFAFB` | App background |
-| `surface` | `#FFFFFF` | Primary surfaces |
-| `surface-raised` | `#F5F7FA` | Raised or grouped surfaces |
-| `control` | `#F3F4F6` | Neutral control backgrounds |
-| `border` | `#E5E7EB` | Default borders and dividers |
-| `border-hover` | `#D1D5DB` | Hovered neutral borders |
-| `text-primary` | `#0F172A` | Primary text |
-| `text-secondary` | `#475569` | Supporting text |
-| `text-muted` | `#94A3B8` | Low-emphasis metadata and hints |
+| `canvas` | `#FAF9F6` | Warm app background beneath the texture layer |
+| `surface` | `#FFFFFF` | Primary work surfaces |
+| `surface-raised` | `#F3F1EC` | Raised or grouped neutral surfaces |
+| `control` | `#F6F3EE` | Neutral control backgrounds |
+| `border` | `#E5E0D9` | Default borders and dividers |
+| `border-hover` | `#D4CCC3` | Hovered neutral borders |
+| `text-primary` | `#2E2A28` | Primary text |
+| `text-secondary` | `#6B645F` | Supporting text |
+| `text-muted` | `#9A928C` | Low-emphasis metadata and hints |
 | `text-inverse` | `#FFFFFF` | Text on strongly colored surfaces |
-| `accent` | `#2563EB` | Primary actions, focus, selected state |
-| `accent-hover` | `#1D4ED8` | Accent hover state |
-| `success` | `#16A34A` | Successful state |
-| `warning` | `#F59E0B` | Warning state |
-| `danger` | `#DC2626` | Destructive or invalid state |
-| `info` | `#0EA5E9` | Informational state |
+| `accent` | `#C05746` | Primary actions, focus, selected state |
+| `accent-hover` | `#B04B3C` | Accent hover/pressed state |
+| `accent-soft` | `#F3D7D4` | Soft selected or highlighted surface |
+| `support` | `#ADC698` | Secondary brand emphasis |
+| `support-soft` | `#E8F1DE` | Quiet supportive tint |
+| `deep-accent` | `#503047` | Occasional deep visual anchor |
+| `success` | `#7CA96B` | Successful state |
+| `warning` | `#D9A24C` | Warning state |
+| `danger` | `#D96B64` | Destructive or invalid state |
+| `info` | `#6B8BA4` | Informational state |
 
 ### Dark theme
 
-Dark mode must use the same semantic token names. It should preserve the same hierarchy instead of mechanically inverting the light theme.
+Dark mode uses the same semantic roles and preserves the warm, muted character rather than mechanically inverting the light theme.
 
 | Token | Value |
 | --- | --- |
-| `canvas` | `#09090B` |
-| `surface` | `#111113` |
-| `surface-raised` | `#18181B` |
-| `control` | `#1C1C1F` |
-| `border` | `#27272A` |
-| `border-hover` | `#3F3F46` |
-| `text-primary` | `#FAFAFA` |
-| `text-secondary` | `#C4C4CC` |
-| `text-muted` | `#8B8B95` |
-| `text-inverse` | `#0F172A` |
-| `accent` | `#3B82F6` |
-| `accent-hover` | `#60A5FA` |
-| `success` | `#22C55E` |
-| `warning` | `#F59E0B` |
-| `danger` | `#EF4444` |
-| `info` | `#38BDF8` |
+| `canvas` | `#21191F` |
+| `surface` | `#2B2129` |
+| `surface-raised` | `#352831` |
+| `control` | `#3D2F39` |
+| `border` | `#594651` |
+| `border-hover` | `#6D5663` |
+| `text-primary` | `#FAF7F4` |
+| `text-secondary` | `#D4C9C3` |
+| `text-muted` | `#A997A0` |
+| `text-inverse` | `#2E2A28` |
+| `accent` | `#D47766` |
+| `accent-hover` | `#E18A79` |
+| `accent-soft` | `#4E302F` |
+| `support` | `#B8CDA7` |
+| `support-soft` | `#394335` |
+| `deep-accent` | `#9A718F` |
+| `success` | `#8EB57C` |
+| `warning` | `#E0AE61` |
+| `danger` | `#E27C74` |
+| `info` | `#81A0B8` |
 
 `system` follows the operating system or browser color-scheme preference and resolves to the corresponding light or dark semantic token set.
+
+## Background Texture
+
+The textured background is a canonical part of QR Studio's identity. It should feel tactile, quiet, and slightly editorial without reducing the clarity of the working interface.
+
+### Light appearance
+
+- Base canvas: `#FAF9F6`.
+- Add a fine paper-like grain at approximately **3-4% visible opacity**.
+- Add a small number of **large, irregular organic color fields** using Rosy Copper, Muted Olive, Tea Green, and Blackberry Cream.
+- Color fields should be strongly muted by opacity, normally **8-16%** over the canvas.
+- Individual forms should be large enough to read as atmosphere rather than decoration: approximately **28-56vw** across on desktop.
+- Forms may extend beyond viewport edges and overlap lightly.
+- The texture should resemble pigment or paper grain, not digital noise, glow, glass, or a glossy gradient.
+- Keep the central working surfaces mostly opaque. The texture should frame the interface, not show strongly through inputs, cards, menus, or QR preview surfaces.
+
+### Dark appearance
+
+- Preserve the same tactile concept against the dark canvas.
+- Grain should be slightly quieter, approximately **2-3% visible opacity**.
+- Use copper, olive, tea, and blackberry fields at approximately **6-10% opacity**.
+- Do not brighten dark-mode forms enough to create glowing patches behind the interface.
+
+### Texture behavior
+
+- Texture is decorative and must never carry information.
+- Texture must not animate.
+- Texture may be fixed to the viewport while content scrolls.
+- Avoid small repeated motifs or high-frequency patterns.
+- Do not place a high-contrast color field directly behind text that is rendered without an opaque or sufficiently protective surface.
+- Under forced-colors or other accessibility modes where the texture would interfere, it may be removed entirely.
 
 ## Typography
 
@@ -160,8 +228,8 @@ Routine cards and controls should not use 2px decorative borders. Reserve thicke
 | Level | Value | Intended use |
 | --- | --- | --- |
 | Default | `none` | Most surfaces |
-| Raised | `0 1px 2px rgba(0, 0, 0, 0.06)` | Cards and dropdowns |
-| Floating | `0 8px 24px rgba(0, 0, 0, 0.10)` | Dialogs, popovers, temporarily floating UI |
+| Raised | `0 1px 2px rgba(46, 42, 40, 0.06)` | Cards and dropdowns |
+| Floating | `0 8px 24px rgba(46, 42, 40, 0.10)` | Dialogs, popovers, temporarily floating UI |
 
 Elevation should be communicated primarily through surface, border, and placement. Shadows are supporting cues, not decoration.
 
@@ -209,7 +277,11 @@ State should not rely on color alone. Selection, validation, or status should al
 
 ### Focus
 
-Keyboard focus must use a clearly visible accent treatment. Prefer an outer focus ring or equivalent treatment that does not shift layout.
+Keyboard focus must use a clearly visible Rosy Copper accent treatment. Prefer an outer focus ring or equivalent treatment that does not shift layout.
+
+### Selected and supporting states
+
+Use Rosy Copper for the primary active/focus cue. Muted Olive or Tea Green may support low-emphasis selected surfaces, secondary state, or ambient grouping, but should not compete with the primary action hierarchy.
 
 ### Disabled
 
@@ -238,9 +310,10 @@ A typical hierarchy should read approximately as:
 When implementing or revising the interface:
 
 1. Use these tokens before creating a new value.
-2. If a new value is necessary, confirm that it solves a recurring design need rather than a one-off alignment issue.
-3. Promote recurring exceptions into this document instead of allowing silent token drift.
-4. Keep light, dark, and system themes semantically equivalent.
-5. Treat accessibility, QR scan reliability, and clarity as higher priorities than visual consistency when a genuine conflict exists.
+2. Treat the five-color identity palette and textured canvas as canonical unless this specification is explicitly revised.
+3. If a new value is necessary, confirm that it solves a recurring design need rather than a one-off alignment issue.
+4. Promote recurring exceptions into this document instead of allowing silent token drift.
+5. Keep light, dark, and system themes semantically equivalent.
+6. Treat accessibility, QR scan reliability, and clarity as higher priorities than visual consistency when a genuine conflict exists.
 
 This token system defines visual consistency. It does not override the product and interaction principles in `DESIGN.md`.
