@@ -6,6 +6,8 @@ This document defines the product's design philosophy and interaction principles
 
 Where this document draws from Apple's Human Interface Guidelines, it adopts **interaction and usability principles only**. It does not prescribe Apple-specific visual styling, component appearance, platform conventions, or imitation of Apple's interface aesthetic.
 
+The implementation-level visual primitives that support this philosophy are defined in [`DESIGN-TOKENS.md`](./DESIGN-TOKENS.md). That companion specification is the canonical source for typography, spacing, semantic colors, radii, control sizing, icon sizing, borders, shadows, motion, responsive breakpoints, and component-state conventions.
+
 ## Core Philosophy
 
 QR Studio should feel **clear, calm, immediate, and trustworthy**. The interface should make a capable QR tool feel simple without reducing what advanced users can do.
