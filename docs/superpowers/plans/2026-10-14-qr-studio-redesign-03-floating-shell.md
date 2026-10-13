@@ -66,7 +66,7 @@
 - [ ] Implement one selected top-level feature state.
 - [ ] Make selection update the right inspector context without changing workspace content or QR state.
 - [ ] Expose selected state via both styling and accessible semantics.
-- [ ] Default to the most useful existing feature area without hard-resetting user QR settings.
+- [ ] Default to `Style` without hard-resetting user QR settings.
 - [ ] Add tests proving navigation changes only inspector context.
 - [ ] Commit.
 
