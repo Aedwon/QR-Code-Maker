@@ -6,7 +6,7 @@
 
 **Architecture:** Keep current markup and interaction structure temporarily. Replace hard-coded styling with semantic CSS custom properties and a small theme controller so later shell work inherits a stable visual system.
 
-**Tech Stack:** CSS custom properties, vanilla JavaScript, Vite, Playwright.
+**Tech Stack:** CSS custom properties, vanilla JavaScript, Vite, Playwright, `@fontsource/inter`.
 
 **Spec:** `DESIGN-TOKENS.md`
 
@@ -48,8 +48,8 @@
 - Modify: `src/main.js`
 - Modify: `index.html`
 
-- [ ] Replace the Google Fonts runtime dependency with a locally bundled Inter source or an equivalent local package that produces bundled font assets.
-- [ ] Remove font preconnect/remote stylesheet tags.
+- [ ] Add `@fontsource/inter` and import the documented Inter weights from the application bundle.
+- [ ] Remove Google Fonts preconnect and remote stylesheet tags.
 - [ ] Keep the documented fallback stack intact.
 - [ ] Run the app with network disabled and verify typography still renders correctly.
 - [ ] Run build and regression tests.
