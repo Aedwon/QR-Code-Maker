@@ -8,6 +8,8 @@ Where this document draws from Apple's Human Interface Guidelines, it adopts **i
 
 The implementation-level visual primitives that support this philosophy are defined in [`DESIGN-TOKENS.md`](./DESIGN-TOKENS.md). That companion specification is the canonical source for typography, spacing, semantic colors, radii, control sizing, icon sizing, borders, shadows, motion, responsive breakpoints, background texture, and component-state conventions.
 
+The canonical interface composition and interaction patterns are defined in [`UI-PATTERNS.md`](./UI-PATTERNS.md). That companion specification is the source of truth for the floating navigation/workspace/inspector model, pinned controls, responsive adaptation, and placement responsibilities.
+
 ## Core Philosophy
 
 QR Studio should feel **clear, calm, immediate, and trustworthy**. The interface should make a capable QR tool feel simple without reducing what advanced users can do.
@@ -263,4 +265,4 @@ This philosophy does not determine:
 - specific breakpoints,
 - a fixed color palette.
 
-Those belong in separate product, UX, and implementation decisions derived from these principles.
+Those decisions belong in `UI-PATTERNS.md`, `DESIGN-TOKENS.md`, product scope, and implementation decisions derived from these principles.
