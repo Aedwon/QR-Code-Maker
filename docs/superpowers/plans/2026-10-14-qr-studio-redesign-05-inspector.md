@@ -1,3 +1,7 @@
+> **SUPERSEDED — DO NOT EXECUTE**
+>
+> This document is retained as planning history only. Use the approved parent plan and the `2026-10-14-qr-studio-redesign-impl-01-*` through `impl-05-*` implementation plans instead.
+
 # QR Studio Redesign 05: Contextual Inspector Migration Implementation Plan
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
