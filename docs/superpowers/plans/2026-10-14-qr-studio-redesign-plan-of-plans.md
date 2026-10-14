@@ -2,7 +2,7 @@
 
 > **Status:** APPROVED parent plan. The Executive Review below is the product/design approval surface. Everything after it is an implementation contract for agents unless it introduces a new product decision, changes scope, or conflicts with the Executive Review.
 >
-> The existing seven numbered redesign documents are superseded phase briefs/reference material and must not be treated as executable implementation plans. New detailed implementation plans will be derived from this approved parent plan.
+> The existing seven numbered redesign documents are superseded phase briefs/reference material and must not be treated as executable implementation plans. The five detailed implementation plans listed under **Planning Status** are the executable planning set derived from this parent plan.
 
 ## Executive Review
 
@@ -76,7 +76,8 @@ If a simple local solution is sufficient for the current feature set, prefer it.
 - Pinning must not require a generalized application-wide state framework. Use a small shared binding mechanism only for settings that need multiple synchronized views.
 - Start with a curated pinnable set rather than making every control pinnable.
 - Preserve the local-first product principle. Remove Google Analytics. Replace the current networked feedback submission with a simple external feedback/contact destination if one already exists; otherwise remove in-app submission instead of adding backend infrastructure.
-- Update Privacy/Terms/feedback copy where needed so public-facing statements accurately reflect the resulting implementation.
+- Do not leave a dead Feedback utility in the new Navigation. Feedback appears only if a real external destination is explicitly configured later.
+- Update Privacy/Terms copy where needed so public-facing statements accurately reflect the resulting implementation.
 - Use the canonical palette, texture, typography, spacing, radii, motion, and responsive tokens from `DESIGN-TOKENS.md`.
 - Retain canonical Rosy Copper `#C05746` exactly. Do not alter the brand primitive merely to change the white-on-copper contrast ratio. For normal-size white text on a filled copper action, prefer an accessible darker derived copper such as the existing `#B04B3C`; keep `#C05746` for brand identity, focus, borders, icons, accents, and treatments where text contrast is not compromised.
 - Support light, dark, and system appearance. Theme changes must never alter the user's QR design/output state.
@@ -90,7 +91,8 @@ Workstream 1 must lock:
 
 - final control-to-section mapping for `Style`, `Colors`, `Logo`, `Scan Quality`, and `Output`,
 - which current controls are intentionally removed, if any,
-- treatment of current footer-only material after Privacy, Terms, and Feedback move into navigation,
+- treatment of current footer-only material after Privacy, Terms, and copyright move into Navigation,
+- whether Feedback is omitted because no real external destination exists,
 - initial curated pinnable-control list.
 
 Do not defer the control map until after the shell is built.
@@ -107,14 +109,15 @@ Includes:
 
 - concise current-control inventory,
 - final control-to-section map,
-- small browser regression baseline for core flows,
-- Privacy/Terms/Feedback utility smoke coverage,
+- a small browser regression baseline for core flows,
+- Terms/Privacy utility smoke coverage,
 - removal of Google Analytics,
-- replacement/removal of networked Web3Forms feedback submission,
+- removal of networked Web3Forms feedback submission,
+- omission of a dead Feedback utility when no explicit external destination exists,
 - update of privacy/legal copy to match the new implementation,
 - decision on footer/copyright/legal-notice treatment.
 
-**Minimum automated coverage:** content editing, representative Style/Colors changes, logo add/remove, error correction, export, and utility/modal smoke behavior.
+**Minimum automated coverage:** content editing, representative Style/Colors changes, logo add/remove, error correction, export, and Terms/Privacy smoke behavior.
 
 **Exit condition:** We know what exists, where it is going, and what behavior must survive.
 
@@ -163,7 +166,7 @@ Implement pinning without turning the project into a generalized state architect
 
 Use a small shared setting-binding mechanism only for curated pinnable settings so native and pinned views stay synchronized.
 
-Initial candidate set:
+Initial set:
 
 - QR/module shape,
 - primary QR color,
@@ -195,7 +198,8 @@ At `600-899px` and `<600px`:
 - Workspace remains persistent,
 - Navigation and Inspector are temporary surfaces,
 - choosing a top-level feature in Navigation automatically hands off to the corresponding Inspector,
-- Privacy/Terms/Feedback follow their own utility behavior rather than opening Inspector,
+- Privacy/Terms open their own utility surfaces rather than Inspector,
+- Feedback appears only if a real external destination has been configured,
 - theme changes apply in place,
 - hidden panels are not interactable.
 
@@ -235,7 +239,8 @@ Keep automated testing small and high-value. Protect:
 - theme switch preserving QR state,
 - native ↔ pinned control synchronization,
 - temporary Navigation → Inspector handoff,
-- Privacy/Terms/Feedback utility smoke behavior.
+- Terms/Privacy utility smoke behavior,
+- absence of a dead Feedback control when no external destination exists.
 
 Do not pursue exhaustive visual-regression infrastructure or every breakpoint permutation unless a real regression justifies it.
 
@@ -267,9 +272,17 @@ If implementation reveals a missing product decision, stop and elevate only that
 
 ## Planning Status
 
-The existing seven numbered redesign documents were useful for decomposing the problem, but they are **superseded phase briefs/reference material rather than executable implementation plans**.
+Detailed implementation planning is complete. Execute these plans in order:
 
-The next planning step is to write detailed, proportional implementation plans from this five-workstream parent plan. Those plans should contain exact files, interfaces, test cases, commands, and acceptance checks without expanding scope beyond what this document requires.
+1. `docs/superpowers/plans/2026-10-14-qr-studio-redesign-impl-01-baseline-ia-privacy.md`
+2. `docs/superpowers/plans/2026-10-14-qr-studio-redesign-impl-02-visual-shell.md`
+3. `docs/superpowers/plans/2026-10-14-qr-studio-redesign-impl-03-workspace-inspector.md`
+4. `docs/superpowers/plans/2026-10-14-qr-studio-redesign-impl-04-pinned-controls.md`
+5. `docs/superpowers/plans/2026-10-14-qr-studio-redesign-impl-05-responsive-polish.md`
+
+The existing seven numbered redesign documents are **superseded planning history and must not be executed**. Each carries a superseded notice pointing to this implementation set.
+
+The five detailed plans contain the exact files, interfaces, test cases, commands, visual checkpoints, and acceptance checks required for execution without expanding the approved scope.
 
 ## Definition of Done
 
@@ -284,7 +297,8 @@ The redesign is complete when:
 - the pin system keeps native and pinned controls synchronized without duplicated state,
 - light/dark/system themes use the canonical muted palette and textured canvas without changing QR design state,
 - Google Analytics and networked in-app feedback submission no longer contradict local-first positioning,
-- Privacy/Terms/Feedback copy accurately reflects the resulting implementation,
+- no dead Feedback utility is shown without a real external destination,
+- Privacy/Terms copy accurately reflects the resulting implementation,
 - accessibility essentials for temporary surfaces are handled,
 - the small regression suite and production build pass,
 - visual checkpoints confirm the result is strong enough to represent the project as a design portfolio piece,
