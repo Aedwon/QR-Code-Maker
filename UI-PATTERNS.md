@@ -37,12 +37,12 @@ Avoid duplicating controls or navigation concepts across the interface unless th
 
 Each concept should have one canonical home:
 
-- Content type selection (`Text`, `Link`, `Contact`, `Wi-Fi`, `More`) belongs only in the top-middle workspace selector.
+- Content type selection, **when two or more real content modes exist**, belongs only in the top-middle workspace selector.
 - Top-level customization areas (`Style`, `Colors`, `Logo`, `Scan Quality`, `Output`) belong only in the left navigation.
 - Feature-specific configuration belongs in the right inspector.
 - Theme selection belongs in the persistent utility area.
 
-Do not repeat the content-type selector in the left sidebar. The top-middle selector already performs that job, so duplicating it in navigation adds noise and creates two competing mental models for the same action.
+Do not repeat a content-type selector in the left sidebar. When multiple content modes exist, the top-middle workspace selector performs that job, so duplicating it in navigation adds noise and creates two competing mental models for the same action.
 
 Exceptions must be intentional shortcuts rather than parallel navigation. The pinned-controls dock and the persistent `Download PNG` quick action are valid because they provide faster access to existing settings/actions while preserving a single underlying state and canonical location.
 
@@ -71,7 +71,7 @@ Use user-facing language, not internal implementation terminology:
 
 These labels are navigation concepts. Internal feature names may differ.
 
-Do not add content-type choices such as Text, Link, Contact, or Wi-Fi to this sidebar. Those belong exclusively to the workspace content selector.
+Do not add content-type choices such as Text, Link, Contact, or Wi-Fi to this sidebar. If/when those modes are implemented, they belong exclusively to the workspace content selector.
 
 ### Secondary items
 
@@ -101,30 +101,27 @@ The center is the user's primary working area and must remain visually dominant.
 
 It contains:
 
-1. Content-type selector.
-2. Content input that adapts to the selected type.
+1. Content input.
+2. Byte/capacity feedback associated with that input.
 3. QR preview.
 4. Primary quick action for export/download.
+5. A content-type selector **only when at least two real content modes exist**.
 
 ### Content-type selector
 
-The content selector is a workspace control, not application navigation.
+The content selector is optional infrastructure, not a permanent requirement of the current single-mode product.
 
-Expected primary choices:
+Do not render a one-item selector, placeholder modes, or dead choices merely to match concept art. While only the current free-form URL/text workflow exists, omit the selector entirely.
 
-- Text
-- Link
-- Contact
-- Wi-Fi
-- More
+If two or more real content modes are implemented later, the selector becomes a workspace control, not application navigation. Expected future primary choices may include Text, Link, Contact, Wi-Fi, and More, but those labels must correspond to actually implemented behavior before appearing.
 
-The selector may use a segmented-control treatment. `More` may reveal less common supported content types.
+When present, the selector may use a segmented-control treatment. `More` may reveal less common supported content types.
 
 This selector is the **only** primary location for choosing content type. Do not mirror these choices in the left navigation or right inspector.
 
-### Morphing content input
+### Adaptive content input
 
-The input area changes according to the selected content type.
+If multiple content modes are implemented later, the input area may change according to the selected content type.
 
 Examples:
 
@@ -133,7 +130,7 @@ Examples:
 - Contact → contact fields.
 - Wi-Fi → network configuration fields.
 
-The transition should preserve spatial continuity and use the motion tokens in `DESIGN-TOKENS.md`.
+Any transition should preserve spatial continuity and use the motion tokens in `DESIGN-TOKENS.md`.
 
 The content-input area must not become a second navigation layer.
 
@@ -187,12 +184,13 @@ Users may pin frequently used subfeatures so they remain accessible without swit
 - Pinned controls appear in a compact dock at the top of the right inspector.
 - The dock remains available when the user changes the selected left-nav feature.
 - If nothing is pinned, the pinned dock is hidden entirely. Do not reserve an empty card or blank area.
-- Pinned controls remain fully interactive and change the same underlying setting as their original control.
+- Native controls remain in their normal inspector sections.
+- Pinned controls are convenience mirrors and must change the same underlying setting as their native controls.
 - A setting must never exist as two independent values simply because it appears both pinned and in its native section.
 - Pinned items can be reordered and unpinned.
 - Provide a compact way to collapse the pinned area when it contains multiple controls.
 
-Pinned controls are the intentional exception to the general anti-redundancy rule. They mirror an existing setting solely to reduce navigation effort, and both instances must always represent the same state.
+Pinned controls are the intentional exception to the general anti-redundancy rule. They mirror an existing setting solely to reduce navigation effort, and both views must always represent the same state.
 
 ### Pin affordance
 
@@ -216,13 +214,13 @@ The exact dimensions may adapt, but the desktop composition should preserve this
 ```text
 ┌──────────────────────────────── textured canvas ────────────────────────────────┐
 │                                                                                 │
-│   ╭────────────╮      content selector / adaptive input      ╭──────────────╮   │
-│   │ persistent │                                            │   pinned     │   │
-│   │ navigation │               QR preview                   │   controls   │   │
-│   │            │                                            ├──────────────┤   │
-│   │            │               quick action                 │ contextual   │   │
-│   │            │                                            │ inspector    │   │
-│   ╰────────────╯                                            ╰──────────────╯   │
+│   ╭────────────╮        content input / optional mode selector ╭──────────────╮ │
+│   │ persistent │                                             │    pinned    │ │
+│   │ navigation │                QR preview                   │   controls   │ │
+│   │            │                                             ├──────────────┤ │
+│   │            │                quick action                 │ contextual  │ │
+│   │            │                                             │ inspector   │ │
+│   ╰────────────╯                                             ╰──────────────╯ │
 │                                                                                 │
 └─────────────────────────────────────────────────────────────────────────────────┘
 ```
@@ -350,7 +348,8 @@ Do not:
 
 - attach either sidebar visually to the viewport edge,
 - turn the left navigation into a full list of every available subfeature,
-- duplicate the top-middle content-type selector in the left sidebar,
+- expose a content-type selector while fewer than two real content modes exist,
+- duplicate the workspace content-type selector in the left sidebar when it does exist,
 - mirror the same control in multiple zones without a specific shortcut rationale,
 - make the right inspector another navigation hierarchy,
 - permanently reserve a large empty pinned-feature region,
