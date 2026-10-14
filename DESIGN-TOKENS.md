@@ -44,6 +44,12 @@ Derived colors may be used where interaction states require them. They should re
 
 The primary interaction color is Rosy Copper. Muted Olive is complementary, not a competing primary CTA color. Blackberry Cream should provide depth and contrast without becoming a second dominant action color.
 
+### Copper and text contrast
+
+Keep the canonical Rosy Copper primitive `#C05746` unchanged. Do not alter the brand color merely to push a borderline white-on-copper contrast ratio over a threshold.
+
+For normal-size white text on a solid filled primary action, prefer the existing darker derived copper `#B04B3C`, or use a sufficiently dark foreground on `#C05746` when that treatment fits the component. `#C05746` remains the canonical choice for brand identity, focus rings, borders, icons, accents, and treatments where normal-size white text is not placed directly on it.
+
 ## Semantic Color Tokens
 
 ### Light theme
@@ -203,7 +209,7 @@ A visible desktop control may be 32-40px tall while retaining a 44px interactive
 Use one consistent outline icon family and stroke treatment.
 
 | Token | Value | Intended use |
-| --- | ---: | --- |
+| --- | --- | --- |
 | `icon-inline` | 16px | Inline context |
 | `icon-control` | 18px | Buttons and controls |
 | `icon-navigation` | 20px | Navigation, tabs, menus |
@@ -249,12 +255,12 @@ Motion must be interruptible and must not delay input. Under `prefers-reduced-mo
 
 | Range | Classification | Default adaptation |
 | --- | --- | --- |
-| `< 600px` | Phone | Single-column or mobile-specific arrangement |
-| `600-899px` | Tablet | Single adaptive column or simplified split layout |
-| `900-1199px` | Compact desktop | Two-column layout where useful, reduced density |
-| `>= 1200px` | Full desktop | Full intended desktop layout, with sensible max widths |
+| `< 600px` | Phone | Workspace-first; temporary Navigation and Inspector |
+| `600-899px` | Tablet | Workspace-first; temporary Navigation and Inspector |
+| `900-1199px` | Compact desktop | Full three-zone floating layout with reduced dimensions and density |
+| `>= 1200px` | Full desktop | Full three-zone floating layout with sensible max widths |
 
-Breakpoints are adaptation thresholds, not instructions to compress the desktop UI. Layout and interaction models may change when space becomes insufficient.
+Breakpoints are adaptation thresholds, not instructions to compress the desktop UI. For QR Studio specifically, the full Navigation → Workspace → Inspector composition remains present at every width `>=900px`; the interaction model changes only below 900px. Exact responsive behavior is governed by `UI-PATTERNS.md`.
 
 ## Component Density and States
 
