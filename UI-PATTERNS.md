@@ -241,31 +241,78 @@ The diagram describes relationships, not fixed pixel positions.
 
 Use the canonical breakpoints from `DESIGN-TOKENS.md`.
 
-### Full and compact desktop
+### Full and compact desktop (`>= 900px`)
 
-Preserve the three-zone model where space allows.
+Preserve the full three-zone floating model at all desktop widths:
 
-Both sidebars remain floating, self-contained surfaces.
+**Navigation → Workspace → Inspector**
 
-### Tablet
+Both sidebars remain visible, floating, and self-contained. Compact desktop adapts dimensions and density rather than changing the information architecture.
+
+At `900-1199px`:
+
+- narrow the left navigation and right inspector before removing either one,
+- reduce inter-panel gaps and internal padding using the canonical spacing scale,
+- allow the QR preview to scale within a documented useful range,
+- keep the center workspace visually dominant,
+- do not collapse either sidebar into a drawer merely because the viewport is below 1200px.
+
+The desktop interaction model changes only when the viewport enters the tablet range below 900px.
+
+### Tablet (`600-899px`)
 
 Do not squeeze three permanent columns into the viewport.
 
 Preferred adaptation:
 
-- keep the workspace primary,
-- expose navigation and inspector as independent floating sheets, popovers, or drawers,
-- ensure the current feature and inspector are still easy to reopen,
-- preserve pinned controls inside the inspector rather than creating a separate permanent panel.
+- keep the workspace primary and persistently visible,
+- expose navigation and inspector as independent temporary floating sheets or drawers,
+- preserve pinned controls inside the inspector rather than creating a separate permanent panel,
+- provide clear controls to reopen navigation and the current inspector.
 
-### Phone
+#### Navigation-to-inspector handoff
 
-Use a workspace-first layout.
+When navigation and inspector are temporary surfaces, selecting a top-level feature from Navigation is also a request to configure that feature.
+
+The canonical sequence is:
+
+1. User opens Navigation.
+2. User selects `Style`, `Colors`, `Logo`, `Scan Quality`, or `Output`.
+3. The selected feature state updates immediately.
+4. Navigation closes.
+5. Inspector opens automatically to the selected feature.
+
+Do **not** require a second tap on a separate inspector button after the user has already selected a feature.
+
+Selecting the already-active feature should still perform the handoff and open Inspector if Inspector is currently closed.
+
+The Navigation and Inspector surfaces should behave as a coordinated handoff, not as stacked drawers. Navigation should begin closing and Inspector should open as part of the same short transition, using the canonical panel-motion timing. Avoid leaving both full temporary surfaces layered over one another after selection.
+
+Utility items are exceptions:
+
+- `Privacy` opens the privacy surface directly, not Inspector.
+- `Terms of Use` opens the terms surface directly, not Inspector.
+- `Feedback` opens its relevant surface/action directly, not Inspector.
+- Theme controls apply the selected appearance in place. Navigation should remain open after a theme change unless a later narrow-screen constraint provides a stronger reason to close it.
+
+After configuration, closing Inspector returns the user directly to the unchanged workspace.
+
+### Phone (`< 600px`)
+
+Use the same workspace-first mental model as tablet, with temporary navigation and inspector surfaces adapted to the smaller viewport.
 
 - Navigation becomes a temporary sheet/drawer.
 - Inspector becomes a temporary sheet/drawer.
 - The QR preview and current content input remain primary.
+- Selecting a top-level feature from Navigation performs the same automatic Navigation → Inspector handoff defined for tablet.
 - Do not stack a full navigation panel, full workspace, and full inspector vertically as one long page.
+- Do not keep Navigation and Inspector simultaneously open as competing full-height layers after a feature selection.
+
+The expected narrow-screen flow is:
+
+**Workspace → Navigation → choose feature → Inspector → configure → close → Workspace**
+
+This should feel like one continuous task rather than two separate panel-opening steps.
 
 ## Component and State Rules
 
@@ -310,8 +357,11 @@ Do not:
 - pin entire settings pages,
 - duplicate setting state between pinned and native controls,
 - add content-type navigation to the left sidebar,
+- require a second inspector-opening action after a user selects a top-level feature from temporary navigation,
+- leave Navigation and Inspector stacked as competing full-screen or full-height temporary surfaces after feature selection,
 - let the textured background reduce QR-preview or form readability,
 - use large edge-to-edge header or footer chrome that breaks the floating-surface composition,
+- collapse a desktop sidebar solely because the viewport is in the `900-1199px` compact-desktop range,
 - compress the desktop three-zone layout onto mobile.
 
 ## Canonical Mental Model
