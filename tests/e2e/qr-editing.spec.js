@@ -1,10 +1,9 @@
 import { test, expect } from '@playwright/test';
-import { openApp, expandAllSections } from './helpers/app.js';
+import { openApp, openSection } from './helpers/app.js';
 import { getPreviewSignature } from './helpers/preview.js';
 
 test.beforeEach(async ({ page }) => {
   await openApp(page);
-  await expandAllSections(page);
 });
 
 test('content edits regenerate the preview after the debounce', async ({ page }) => {
@@ -23,6 +22,7 @@ test('module shape selection updates active state and preview', async ({ page })
 });
 
 test('module color hex and native input stay in sync and change the preview', async ({ page }) => {
+  await openSection(page, 'colors');
   const before = await getPreviewSignature(page);
   await page.locator('#dot-color-hex').fill('#C05746');
   await expect(page.locator('#dot-color')).toHaveValue('#c05746');
@@ -37,6 +37,7 @@ test('manual changes detach the active preset', async ({ page }) => {
 });
 
 test('gradient round trip clears back to a flat color', async ({ page }) => {
+  await openSection(page, 'colors');
   const flat = await getPreviewSignature(page);
   await page.locator('label:has(#dot-gradient-toggle)').click();
   await expect(page.locator('#dot-gradient-toggle')).toBeChecked();
