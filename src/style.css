@@ -577,9 +577,8 @@ html[data-theme="dark"] .cp { box-shadow: var(--shadow-float), inset 0 0 0 1px r
 .btn-primary:hover:active { transform: scale(0.97); }
 
 /* Selection lands with a pop. */
-.style-btn.active svg, .nav-item[aria-current="page"] .ic, .pin-btn[aria-pressed="true"] .pin-on, .seg-btn[aria-pressed="true"] svg { animation: pop 340ms var(--motion-spring); }
+.style-btn.active svg, .nav-item[aria-current="page"] .ic, .pin-btn[aria-pressed="true"] .pin-on { animation: pop 340ms var(--motion-spring); }
 .preset-btn.active .preset-preview { animation: pop 340ms var(--motion-spring); }
-.ec-btn.active, .seg-btn[aria-pressed="true"] { animation: pop 300ms var(--motion-spring); }
 .preset-btn:hover .preset-preview { transform: translateY(-2px); }
 .preset-preview { transition: transform var(--motion-normal) var(--motion-spring), box-shadow var(--motion-normal) var(--motion-ease); }
 .style-btn:hover { transform: translateY(-1px); }
@@ -611,6 +610,16 @@ html[data-theme="dark"] .cp { box-shadow: var(--shadow-float), inset 0 0 0 1px r
 }
 @keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
 .modal-card, .modal-content { animation-timing-function: var(--motion-spring); }
+
+/* ---------- Sliding segmented pill ---------- */
+.seg, .ec-grid { position: relative; }
+.seg-thumb {
+  position: absolute; left: 0; top: 0; border-radius: 9px; background: var(--pill); box-shadow: var(--shadow-raised);
+  pointer-events: none; z-index: 0; opacity: 0;
+}
+.seg-thumb.ready { transition: transform 360ms var(--motion-spring), width 360ms var(--motion-spring), opacity var(--motion-fast) var(--motion-ease); }
+.seg-btn, .ec-btn { position: relative; z-index: 1; }
+.seg-btn[aria-pressed="true"], .ec-btn.active { background: none; box-shadow: none; }
 
 /* ---------- Reduced motion & forced colors ---------- */
 @media (prefers-reduced-motion: reduce) {

@@ -10,12 +10,14 @@ import { initTheme, setAppearance, getAppearance } from './theme.js';
 import { initShell } from './ui/shell.js';
 import { initPins } from './ui/pins.js';
 import { initColorPicker } from './ui/color-picker.js';
+import { initSlidingSegments } from './ui/sliding-segments.js';
 import { renderPresetThumb, initShapeGlyphs } from './ui/preset-thumbs.js';
 import './style.css';
 
 initTheme();
 initShapeGlyphs();
 initColorPicker();
+initSlidingSegments();
 
 // ── Presets ──────────────────────────────────────────────────
 const PRESETS = {
@@ -144,13 +146,22 @@ function pulsePreview() {
     previewEl.classList.add('is-updating');
 }
 
+let rafId = 0;
+function renderQR(pulse) {
+    qrCode.update(buildOptions());
+    if (pulse) pulsePreview();
+}
+
+// Sliders redraw on the next frame so the preview tracks the thumb live;
+// everything else keeps a short debounce.
 function updateQR() {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-        const opts = buildOptions();
-        qrCode.update(opts);
-        pulsePreview();
-    }, 150);
+    const dragging = document.activeElement?.type === 'range';
+    if (dragging) {
+        if (!rafId) rafId = requestAnimationFrame(() => { rafId = 0; renderQR(false); });
+        return;
+    }
+    debounceTimer = setTimeout(() => renderQR(true), 150);
 }
 
 function buildOptions() {
