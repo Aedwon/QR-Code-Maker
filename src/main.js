@@ -3,7 +3,13 @@
    ======================================== */
 
 import QRCodeStyling from 'qr-code-styling';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import { initTheme } from './theme.js';
 import './style.css';
+
+initTheme();
 
 // ── Presets ──────────────────────────────────────────────────
 const PRESETS = {
