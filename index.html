@@ -5,81 +5,114 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <!-- Google Analytics (GA4) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PC9VK5QNNX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
-    gtag('config', 'G-PC9VK5QNNX');
-  </script>
   <title>QR Studio by Aedwon</title>
   <meta name="description"
     content="Create stunning, fully customizable QR codes with custom colors, patterns, gradients, and embedded logos. Export as PNG, SVG, or JPEG." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <meta name="color-scheme" content="light dark" />
+  <script>
+    // Resolve the theme before first paint to avoid a flash (src/theme.js owns the logic afterwards).
+    (function () {
+      var m = 'system';
+      try { m = localStorage.getItem('qr-studio:appearance') || 'system'; } catch (e) {}
+      if (m !== 'light' && m !== 'dark') m = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.documentElement.dataset.theme = m;
+    })();
+  </script>
 </head>
 
 <body>
-  <div class="app">
-    <!-- Header -->
-    <header class="header">
-      <div class="header-left">
-        <h1>QR Studio <span class="brand-by">by Aedwon</span></h1>
+  <svg class="texture texture-wide" aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice"><defs><filter id="pig-w" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="3" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="70"/><feGaussianBlur stdDeviation="1.5"/></filter><filter id="grain-w" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></defs><g filter="url(#pig-w)"><path class="b-cu" d="M703.5 760C705.3 850.7 611.6 977.3 537.7 1037.7C463.8 1098.1 340.8 1134.2 260 1122.4C179.2 1110.6 129.2 1027.4 53 967C-23.2 906.6 -177.8 848.4 -197.2 760C-216.6 671.6 -139.8 479.2 -63.6 436.4C12.6 393.6 161.6 493.6 260 503.1C358.4 512.6 452.7 450.6 526.6 493.4C600.5 536.2 701.6 669.3 703.5 760Z"/><path class="b-ol" d="M1562.8 260C1556.2 350.9 1496.7 468.6 1432.9 512.9C1369.1 557.2 1270.7 519.5 1180 525.9C1089.3 532.3 964.6 595.6 888.7 551.3C812.9 506.9 706.4 338.8 724.7 260C743 181.2 922.5 134.4 998.4 78.4C1074.3 22.4 1101 -57.5 1180 -76C1259 -94.4 1408.7 -88.5 1472.5 -32.5C1536.3 23.5 1569.4 169.1 1562.8 260Z"/><path class="b-te" d="M944.8 80C929.3 153.2 847.5 183.4 793.4 253.4C739.3 323.4 696.2 481.7 620 500.1C543.8 518.5 376.4 433.9 336.1 363.9C295.7 293.9 370.4 167 378 80C385.6 -7 341.4 -96.1 381.7 -158.3C422 -220.5 535.9 -288.5 620 -293.1C704.1 -297.7 831.9 -248.2 886.1 -186.1C940.2 -123.9 960.2 6.8 944.8 80Z"/><path class="b-bb" d="M1430.5 830C1431.5 895.7 1480 973.6 1449.9 1029.9C1419.8 1086.2 1307.1 1177.4 1250 1167.9C1192.9 1158.4 1146.1 1029.1 1107.2 972.8C1068.2 916.5 1025.7 886.9 1016.4 830C1007.2 773.1 1012.7 679.7 1051.7 631.7C1090.6 583.6 1184.6 541.3 1250 542C1315.4 542.7 1414.2 587.7 1444.3 635.7C1474.4 683.7 1429.6 764.3 1430.5 830Z"/></g><rect class="grain" width="100%" height="100%" filter="url(#grain-w)"/></svg>
+  <svg class="texture texture-tall" aria-hidden="true" viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice"><defs><filter id="pig-t" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.006" numOctaves="3" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="70"/><feGaussianBlur stdDeviation="1.5"/></filter><filter id="grain-t" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter></defs><g filter="url(#pig-t)"><path class="b-cu" d="M331.8 780C333 839.7 271.3 923 222.7 962.7C174.1 1002.4 93.1 1026.2 40 1018.4C-13.1 1010.7 -46 955.9 -96.2 916.2C-146.3 876.4 -248 838.2 -260.8 780C-273.6 721.8 -223 595.3 -172.9 567.1C-122.8 538.9 -24.7 604.7 40 611C104.7 617.2 166.7 576.5 215.4 604.6C264 632.8 330.6 720.3 331.8 780Z"/><path class="b-ol" d="M583.9 200C579.9 255.5 543.5 327.5 504.5 354.5C465.5 381.6 405.4 358.6 350 362.5C294.6 366.4 218.4 405.1 172 378C125.6 350.9 60.6 248.2 71.8 200C82.9 151.8 192.6 123.2 239 89C285.4 54.8 301.7 6 350 -5.3C398.3 -16.6 489.7 -13 528.7 21.3C567.7 55.5 588 144.5 583.9 200Z"/><path class="b-te" d="M321 40C312 83.1 263.8 100.8 232 142C200.2 183.2 174.8 276.3 130 287.1C85.2 298 -13.3 248.2 -37 207C-60.7 165.8 -16.8 91.2 -12.4 40C-7.9 -11.2 -33.9 -63.6 -10.2 -100.2C13.6 -136.8 80.6 -176.7 130 -179.5C179.4 -182.2 254.7 -153.1 286.5 -116.5C318.3 -79.9 330.1 -3.1 321 40Z"/><path class="b-bb" d="M458 810C458.7 853 490.4 903.9 470.7 940.7C451 977.5 377.4 1037.2 340 1030.9C302.6 1024.7 272.1 940.2 246.6 903.4C221.2 866.6 193.3 847.2 187.3 810C181.2 772.8 184.9 711.7 210.3 680.3C235.8 648.9 297.2 621.2 340 621.7C382.8 622.1 447.4 651.6 467 683C486.7 714.4 457.4 767 458 810Z"/></g><rect class="grain" width="100%" height="100%" filter="url(#grain-t)"/></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="ph-shapes" viewBox="0 0 256 256"><path d="M71.59,61.47a8,8,0,0,0-15.18,0l-40,120A8,8,0,0,0,24,192h80a8,8,0,0,0,7.59-10.53ZM35.1,176,64,89.3,92.9,176ZM208,76a52,52,0,1,0-52,52A52.06,52.06,0,0,0,208,76Zm-88,0a36,36,0,1,1,36,36A36,36,0,0,1,120,76Zm104,68H136a8,8,0,0,0-8,8v56a8,8,0,0,0,8,8h88a8,8,0,0,0,8-8V152A8,8,0,0,0,224,144Zm-8,56H144V160h72Z"/></symbol>
+  <symbol id="ph-shapes-fill" viewBox="0 0 256 256"><path d="M111.59,181.47A8,8,0,0,1,104,192H24a8,8,0,0,1-7.59-10.53l40-120a8,8,0,0,1,15.18,0ZM208,76a52,52,0,1,0-52,52A52.06,52.06,0,0,0,208,76Zm16,68H136a8,8,0,0,0-8,8v56a8,8,0,0,0,8,8h88a8,8,0,0,0,8-8V152A8,8,0,0,0,224,144Z"/></symbol>
+  <symbol id="ph-palette" viewBox="0 0 256 256"><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89Zm13,93.71A15.89,15.89,0,0,1,198.21,160H152a32,32,0,0,0-32,32,16,16,0,0,1-21.31,15.07C62.49,194.3,40,164,40,128a88,88,0,0,1,87.09-88h.9a88.35,88.35,0,0,1,88,87.25A88.86,88.86,0,0,1,213.81,147.6ZM140,76a12,12,0,1,1-12-12A12,12,0,0,1,140,76ZM96,100A12,12,0,1,1,84,88,12,12,0,0,1,96,100Zm0,56a12,12,0,1,1-12-12A12,12,0,0,1,96,156Zm88-56a12,12,0,1,1-12-12A12,12,0,0,1,184,100Z"/></symbol>
+  <symbol id="ph-palette-fill" viewBox="0 0 256 256"><path d="M200.77,53.89A103.27,103.27,0,0,0,128,24h-1.07A104,104,0,0,0,24,128c0,43,26.58,79.06,69.36,94.17A32,32,0,0,0,136,192a16,16,0,0,1,16-16h46.21a31.81,31.81,0,0,0,31.2-24.88,104.43,104.43,0,0,0,2.59-24A103.28,103.28,0,0,0,200.77,53.89ZM84,168a12,12,0,1,1,12-12A12,12,0,0,1,84,168Zm0-56a12,12,0,1,1,12-12A12,12,0,0,1,84,112Zm44-24a12,12,0,1,1,12-12A12,12,0,0,1,128,88Zm44,24a12,12,0,1,1,12-12A12,12,0,0,1,172,112Z"/></symbol>
+  <symbol id="ph-image" viewBox="0 0 256 256"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40Zm0,16V158.75l-26.07-26.06a16,16,0,0,0-22.63,0l-20,20-44-44a16,16,0,0,0-22.62,0L40,149.37V56ZM40,172l52-52,80,80H40Zm176,28H194.63l-36-36,20-20L216,181.38V200ZM144,100a12,12,0,1,1,12,12A12,12,0,0,1,144,100Z"/></symbol>
+  <symbol id="ph-image-fill" viewBox="0 0 256 256"><path d="M216,40H40A16,16,0,0,0,24,56V200a16,16,0,0,0,16,16H216a16,16,0,0,0,16-16V56A16,16,0,0,0,216,40ZM156,88a12,12,0,1,1-12,12A12,12,0,0,1,156,88Zm60,112H40V160.69l46.34-46.35a8,8,0,0,1,11.32,0h0L165,181.66a8,8,0,0,0,11.32-11.32l-17.66-17.65L173,138.34a8,8,0,0,1,11.31,0L216,170.07V200Z"/></symbol>
+  <symbol id="ph-shield-check" viewBox="0 0 256 256"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm0,72c0,37.07-13.66,67.16-40.6,89.42A129.3,129.3,0,0,1,128,223.62a128.25,128.25,0,0,1-38.92-21.81C61.82,179.51,48,149.3,48,112l0-56,160,0ZM82.34,141.66a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32l-56,56a8,8,0,0,1-11.32,0Z"/></symbol>
+  <symbol id="ph-shield-check-fill" viewBox="0 0 256 256"><path d="M208,40H48A16,16,0,0,0,32,56v56c0,52.72,25.52,84.67,46.93,102.19,23.06,18.86,46,25.26,47,25.53a8,8,0,0,0,4.2,0c1-.27,23.91-6.67,47-25.53C198.48,196.67,224,164.72,224,112V56A16,16,0,0,0,208,40Zm-34.32,69.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></symbol>
+  <symbol id="ph-export" viewBox="0 0 256 256"><path d="M216,112v96a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V112A16,16,0,0,1,56,96H80a8,8,0,0,1,0,16H56v96H200V112H176a8,8,0,0,1,0-16h24A16,16,0,0,1,216,112ZM93.66,69.66,120,43.31V136a8,8,0,0,0,16,0V43.31l26.34,26.35a8,8,0,0,0,11.32-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,93.66,69.66Z"/></symbol>
+  <symbol id="ph-export-fill" viewBox="0 0 256 256"><path d="M216,112v96a16,16,0,0,1-16,16H56a16,16,0,0,1-16-16V112A16,16,0,0,1,56,96h64v48a8,8,0,0,0,16,0V96h64A16,16,0,0,1,216,112ZM136,43.31l26.34,26.35a8,8,0,0,0,11.32-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,93.66,69.66L120,43.31V96h16Z"/></symbol>
+  <symbol id="ph-sun" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm72,88a64,64,0,1,1-64-64A64.07,64.07,0,0,1,192,128Zm-16,0a48,48,0,1,0-48,48A48.05,48.05,0,0,0,176,128ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></symbol>
+  <symbol id="ph-sun-fill" viewBox="0 0 256 256"><path d="M120,40V16a8,8,0,0,1,16,0V40a8,8,0,0,1-16,0Zm8,24a64,64,0,1,0,64,64A64.07,64.07,0,0,0,128,64ZM58.34,69.66A8,8,0,0,0,69.66,58.34l-16-16A8,8,0,0,0,42.34,53.66Zm0,116.68-16,16a8,8,0,0,0,11.32,11.32l16-16a8,8,0,0,0-11.32-11.32ZM192,72a8,8,0,0,0,5.66-2.34l16-16a8,8,0,0,0-11.32-11.32l-16,16A8,8,0,0,0,192,72Zm5.66,114.34a8,8,0,0,0-11.32,11.32l16,16a8,8,0,0,0,11.32-11.32ZM48,128a8,8,0,0,0-8-8H16a8,8,0,0,0,0,16H40A8,8,0,0,0,48,128Zm80,80a8,8,0,0,0-8,8v24a8,8,0,0,0,16,0V216A8,8,0,0,0,128,208Zm112-88H216a8,8,0,0,0,0,16h24a8,8,0,0,0,0-16Z"/></symbol>
+  <symbol id="ph-moon" viewBox="0 0 256 256"><path d="M233.54,142.23a8,8,0,0,0-8-2,88.08,88.08,0,0,1-109.8-109.8,8,8,0,0,0-10-10,104.84,104.84,0,0,0-52.91,37A104,104,0,0,0,136,224a103.09,103.09,0,0,0,62.52-20.88,104.84,104.84,0,0,0,37-52.91A8,8,0,0,0,233.54,142.23ZM188.9,190.34A88,88,0,0,1,65.66,67.11a89,89,0,0,1,31.4-26A106,106,0,0,0,96,56,104.11,104.11,0,0,0,200,160a106,106,0,0,0,14.92-1.06A89,89,0,0,1,188.9,190.34Z"/></symbol>
+  <symbol id="ph-moon-fill" viewBox="0 0 256 256"><path d="M235.54,150.21a104.84,104.84,0,0,1-37,52.91A104,104,0,0,1,32,120,103.09,103.09,0,0,1,52.88,57.48a104.84,104.84,0,0,1,52.91-37,8,8,0,0,1,10,10,88.08,88.08,0,0,0,109.8,109.8,8,8,0,0,1,10,10Z"/></symbol>
+  <symbol id="ph-desktop" viewBox="0 0 256 256"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24h72v16H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V200h72a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40ZM48,56H208a8,8,0,0,1,8,8v80H40V64A8,8,0,0,1,48,56ZM208,184H48a8,8,0,0,1-8-8V160H216v16A8,8,0,0,1,208,184Z"/></symbol>
+  <symbol id="ph-desktop-fill" viewBox="0 0 256 256"><path d="M208,40H48A24,24,0,0,0,24,64V176a24,24,0,0,0,24,24h72v16H96a8,8,0,0,0,0,16h64a8,8,0,0,0,0-16H136V200h72a24,24,0,0,0,24-24V64A24,24,0,0,0,208,40Zm0,144H48a8,8,0,0,1-8-8V160H216v16A8,8,0,0,1,208,184Z"/></symbol>
+  <symbol id="ph-push-pin" viewBox="0 0 256 256"><path d="M235.32,81.37,174.63,20.69a16,16,0,0,0-22.63,0L98.37,74.49c-10.66-3.34-35-7.37-60.4,13.14a16,16,0,0,0-1.29,23.78L85,159.71,42.34,202.34a8,8,0,0,0,11.32,11.32L96.29,171l48.29,48.29A16,16,0,0,0,155.9,224c.38,0,.75,0,1.13,0a15.93,15.93,0,0,0,11.64-6.33c19.64-26.1,17.75-47.32,13.19-60L235.33,104A16,16,0,0,0,235.32,81.37ZM224,92.69h0l-57.27,57.46a8,8,0,0,0-1.49,9.22c9.46,18.93-1.8,38.59-9.34,48.62L48,100.08c12.08-9.74,23.64-12.31,32.48-12.31A40.13,40.13,0,0,1,96.81,91a8,8,0,0,0,9.25-1.51L163.32,32,224,92.68Z"/></symbol>
+  <symbol id="ph-push-pin-fill" viewBox="0 0 256 256"><path d="M235.33,104l-53.47,53.65c4.56,12.67,6.45,33.89-13.19,60A15.93,15.93,0,0,1,157,224c-.38,0-.75,0-1.13,0a16,16,0,0,1-11.32-4.69L96.29,171,53.66,213.66a8,8,0,0,1-11.32-11.32L85,159.71l-48.3-48.3A16,16,0,0,1,38,87.63c25.42-20.51,49.75-16.48,60.4-13.14L152,20.7a16,16,0,0,1,22.63,0l60.69,60.68A16,16,0,0,1,235.33,104Z"/></symbol>
+  <symbol id="ph-qr-code" viewBox="0 0 256 256"><path d="M104,40H56A16,16,0,0,0,40,56v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,104,40Zm0,64H56V56h48v48Zm0,32H56a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V152A16,16,0,0,0,104,136Zm0,64H56V152h48v48ZM200,40H152a16,16,0,0,0-16,16v48a16,16,0,0,0,16,16h48a16,16,0,0,0,16-16V56A16,16,0,0,0,200,40Zm0,64H152V56h48v48Zm-64,72V144a8,8,0,0,1,16,0v32a8,8,0,0,1-16,0Zm80-16a8,8,0,0,1-8,8H184v40a8,8,0,0,1-8,8H144a8,8,0,0,1,0-16h24V144a8,8,0,0,1,16,0v8h24A8,8,0,0,1,216,160Zm0,32v16a8,8,0,0,1-16,0V192a8,8,0,0,1,16,0Z"/></symbol>
+  <symbol id="ph-lock-simple" viewBox="0 0 256 256"><path d="M208,80H176V56a48,48,0,0,0-96,0V80H48A16,16,0,0,0,32,96V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V96A16,16,0,0,0,208,80ZM96,56a32,32,0,0,1,64,0V80H96ZM208,208H48V96H208V208Z"/></symbol>
+  <symbol id="ph-file-text" viewBox="0 0 256 256"><path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Zm-32-80a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,136Zm0,32a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h64A8,8,0,0,1,168,168Z"/></symbol>
+  <symbol id="ph-list" viewBox="0 0 256 256"><path d="M224,128a8,8,0,0,1-8,8H40a8,8,0,0,1,0-16H216A8,8,0,0,1,224,128ZM40,72H216a8,8,0,0,0,0-16H40a8,8,0,0,0,0,16ZM216,184H40a8,8,0,0,0,0,16H216a8,8,0,0,0,0-16Z"/></symbol>
+  <symbol id="ph-sliders-horizontal" viewBox="0 0 256 256"><path d="M40,88H73a32,32,0,0,0,62,0h81a8,8,0,0,0,0-16H135a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16Zm64-24A16,16,0,1,1,88,80,16,16,0,0,1,104,64ZM216,168H199a32,32,0,0,0-62,0H40a8,8,0,0,0,0,16h97a32,32,0,0,0,62,0h17a8,8,0,0,0,0-16Zm-48,24a16,16,0,1,1,16-16A16,16,0,0,1,168,192Z"/></symbol>
+  <symbol id="ph-warning" viewBox="0 0 256 256"><path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"/></symbol>
+  <symbol id="ph-caret-up" viewBox="0 0 256 256"><path d="M213.66,165.66a8,8,0,0,1-11.32,0L128,91.31,53.66,165.66a8,8,0,0,1-11.32-11.32l80-80a8,8,0,0,1,11.32,0l80,80A8,8,0,0,1,213.66,165.66Z"/></symbol>
+  <symbol id="ph-caret-down" viewBox="0 0 256 256"><path d="M213.66,101.66l-80,80a8,8,0,0,1-11.32,0l-80-80A8,8,0,0,1,53.66,90.34L128,164.69l74.34-74.35a8,8,0,0,1,11.32,11.32Z"/></symbol>
+  <symbol id="ph-x" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"/></symbol>
+  <symbol id="ph-upload-simple" viewBox="0 0 256 256"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0ZM93.66,77.66,120,51.31V144a8,8,0,0,0,16,0V51.31l26.34,26.35a8,8,0,0,0,11.32-11.32l-40-40a8,8,0,0,0-11.32,0l-40,40A8,8,0,0,0,93.66,77.66Z"/></symbol>
+  <symbol id="ph-download-simple" viewBox="0 0 256 256"><path d="M224,144v64a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V144a8,8,0,0,1,16,0v56H208V144a8,8,0,0,1,16,0Zm-101.66,5.66a8,8,0,0,0,11.32,0l40-40a8,8,0,0,0-11.32-11.32L136,124.69V32a8,8,0,0,0-16,0v92.69L93.66,98.34a8,8,0,0,0-11.32,11.32Z"/></symbol>
+  <symbol id="ph-dots-six-vertical" viewBox="0 0 256 256"><path d="M104,60A12,12,0,1,1,92,48,12,12,0,0,1,104,60Zm60,12a12,12,0,1,0-12-12A12,12,0,0,0,164,72ZM92,116a12,12,0,1,0,12,12A12,12,0,0,0,92,116Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,116ZM92,184a12,12,0,1,0,12,12A12,12,0,0,0,92,184Zm72,0a12,12,0,1,0,12,12A12,12,0,0,0,164,184Z"/></symbol>
+</svg>
+
+  <div id="app-shell" class="app-shell">
+    <aside id="app-nav" class="app-nav panel" aria-label="Navigation">
+      <div class="nav-head">
+        <div class="brand">
+          <span class="brand-mark"><svg class="ic " aria-hidden="true"><use href="#ph-qr-code"/></svg></span>
+          <h1 class="brand-text">QR Studio<small>by Aedwon</small></h1>
+        </div>
+        <button type="button" id="close-navigation" class="icon-btn sheet-close" aria-label="Close navigation"><svg class="ic " aria-hidden="true"><use href="#ph-x"/></svg></button>
       </div>
-    </header>
+      <nav class="nav-list" aria-label="Customize">
+        <button type="button" class="nav-item" data-feature="style"><svg class="ic ic-reg" aria-hidden="true"><use href="#ph-shapes"/></svg><svg class="ic ic-fill" aria-hidden="true"><use href="#ph-shapes-fill"/></svg><span>Style</span></button>
+        <button type="button" class="nav-item" data-feature="colors"><svg class="ic ic-reg" aria-hidden="true"><use href="#ph-palette"/></svg><svg class="ic ic-fill" aria-hidden="true"><use href="#ph-palette-fill"/></svg><span>Colors</span></button>
+        <button type="button" class="nav-item" data-feature="logo"><svg class="ic ic-reg" aria-hidden="true"><use href="#ph-image"/></svg><svg class="ic ic-fill" aria-hidden="true"><use href="#ph-image-fill"/></svg><span>Logo</span></button>
+        <button type="button" class="nav-item" data-feature="scan-quality"><svg class="ic ic-reg" aria-hidden="true"><use href="#ph-shield-check"/></svg><svg class="ic ic-fill" aria-hidden="true"><use href="#ph-shield-check-fill"/></svg><span>Scan Quality</span></button>
+        <button type="button" class="nav-item" data-feature="output"><svg class="ic ic-reg" aria-hidden="true"><use href="#ph-export"/></svg><svg class="ic ic-fill" aria-hidden="true"><use href="#ph-export-fill"/></svg><span>Output</span></button>
+      </nav>
+      <div class="nav-foot">
+        <button type="button" class="util-btn" id="privacy-link"><svg class="ic " aria-hidden="true"><use href="#ph-lock-simple"/></svg><span>Privacy Policy</span></button>
+        <button type="button" class="util-btn" id="terms-link"><svg class="ic " aria-hidden="true"><use href="#ph-file-text"/></svg><span>Terms of Use</span></button>
+        <div class="foot-label">Appearance</div>
+        <div class="seg" role="group" aria-label="Appearance"><button type="button" class="seg-btn" data-appearance-mode="light" aria-pressed="false" aria-label="Light appearance" title="Light"><svg class="ic ic-reg" aria-hidden="true"><use href="#ph-sun"/></svg><svg class="ic ic-fill" aria-hidden="true"><use href="#ph-sun-fill"/></svg></button><button type="button" class="seg-btn" data-appearance-mode="dark" aria-pressed="false" aria-label="Dark appearance" title="Dark"><svg class="ic ic-reg" aria-hidden="true"><use href="#ph-moon"/></svg><svg class="ic ic-fill" aria-hidden="true"><use href="#ph-moon-fill"/></svg></button><button type="button" class="seg-btn" data-appearance-mode="system" aria-pressed="false" aria-label="System appearance" title="System"><svg class="ic ic-reg" aria-hidden="true"><use href="#ph-desktop"/></svg><svg class="ic ic-fill" aria-hidden="true"><use href="#ph-desktop-fill"/></svg></button></div>
+      </div>
+    </aside>
 
-    <main class="main">
-      <!-- Sidebar Controls -->
-      <aside class="sidebar" id="sidebar">
-        <!-- Content Section -->
-        <section class="control-section" data-section="content">
-          <button class="section-header" aria-expanded="true">
-            <div class="section-title">
-              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71" />
-                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71" />
-              </svg>
-              <span>Content</span>
-            </div>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="section-body">
-            <div class="input-group">
-              <label for="qr-data">URL or Text</label>
-              <textarea id="qr-data" rows="3" placeholder="https://example.com">https://example.com</textarea>
-              <div class="char-counter" id="char-counter">
-                <div class="char-counter-bar">
-                  <div class="char-counter-fill" id="char-counter-fill"></div>
-                </div>
-                <span class="char-counter-text" id="char-counter-text">19 characters</span>
-              </div>
-            </div>
-          </div>
-        </section>
+    <main id="workspace" class="workspace">
+      <div class="ws-bar">
+        <button type="button" id="open-navigation" class="icon-btn" aria-controls="app-nav" aria-expanded="false" aria-label="Open navigation"><svg class="ic " aria-hidden="true"><use href="#ph-list"/></svg></button>
+        <span class="ws-bar-title">QR Studio</span>
+        <button type="button" id="open-inspector" class="icon-btn" aria-controls="app-inspector" aria-expanded="false" aria-label="Open settings"><svg class="ic " aria-hidden="true"><use href="#ph-sliders-horizontal"/></svg></button>
+      </div>
 
-        <!-- Presets Section -->
-        <section class="control-section" data-section="presets">
-          <button class="section-header" aria-expanded="true">
-            <div class="section-title">
-              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <path
-                  d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-              </svg>
-              <span>Presets</span>
-            </div>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="section-body">
+      <section class="card input-card" aria-label="Content">
+        <label class="field-label" for="qr-data">URL or Text</label>
+        <textarea id="qr-data" rows="3" placeholder="https://example.com">https://example.com</textarea>
+        <div class="char-counter" id="char-counter">
+          <div class="char-counter-bar"><div class="char-counter-fill" id="char-counter-fill"></div></div>
+          <div class="char-counter-line"><span class="char-counter-text" id="char-counter-text">19 / 1,663 bytes</span><span class="char-counter-msg" id="char-counter-msg" aria-live="polite">Fits at level Q.</span></div>
+        </div>
+      </section>
+
+      <section class="card preview-card" aria-label="Preview">
+        <div id="qr-preview" class="qr-preview"></div>
+      </section>
+
+      <button type="button" id="quick-download-png" class="btn-primary"><svg class="ic " aria-hidden="true"><use href="#ph-download-simple"/></svg>Download PNG</button>
+    </main>
+
+    <aside id="app-inspector" class="app-inspector panel" aria-label="Inspector">
+      <div id="pinned-controls" class="dock" aria-label="Pinned controls" hidden></div>
+      <div class="inspector-head">
+        <h2 id="inspector-title" tabindex="-1">Style</h2>
+        <button type="button" id="close-inspector" class="icon-btn sheet-close" aria-label="Close settings"><svg class="ic " aria-hidden="true"><use href="#ph-x"/></svg></button>
+      </div>
+      <div class="inspector-body">
+        <section class="inspector-section" data-inspector-section="style" aria-labelledby="inspector-title">
+          <div class="group">
+            <div class="group-head"><h3 class="group-title">Presets</h3></div>
             <div class="preset-grid">
               <button class="preset-btn active" data-preset="classic" title="Classic">
                 <div class="preset-preview preset-classic"></div>
@@ -114,29 +147,8 @@
                 <span>Sunset</span>
               </button>
             </div>
-          </div>
-        </section>
-
-        <!-- Dot Style Section -->
-        <section class="control-section" data-section="dots">
-          <button class="section-header" aria-expanded="false">
-            <div class="section-title">
-              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="3" />
-                <circle cx="5" cy="5" r="2" />
-                <circle cx="19" cy="5" r="2" />
-                <circle cx="5" cy="19" r="2" />
-                <circle cx="19" cy="19" r="2" />
-              </svg>
-              <span>Dot Style</span>
-            </div>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="section-body collapsed">
+          </div><div class="group">
+            <div class="group-head"><h3 class="group-title">Module shape</h3><span class="group-val"></span><button type="button" class="pin-btn" data-pin-action="module-shape" aria-pressed="false" aria-label="Pin Module shape"><svg class="ic pin-off" aria-hidden="true"><use href="#ph-push-pin"/></svg><svg class="ic pin-on" aria-hidden="true"><use href="#ph-push-pin-fill"/></svg></button></div>
             <div class="style-grid" id="dot-style-grid">
               <button class="style-btn active" data-value="square" title="Square">
                 <svg viewBox="0 0 24 24">
@@ -171,26 +183,8 @@
                 </svg>
               </button>
             </div>
-          </div>
-        </section>
-
-        <!-- Corner Square Style Section -->
-        <section class="control-section" data-section="cornerSquare">
-          <button class="section-header" aria-expanded="false">
-            <div class="section-title">
-              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <rect x="7" y="7" width="10" height="10" rx="1" />
-              </svg>
-              <span>Corner Square</span>
-            </div>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="section-body collapsed">
+          </div><div class="group">
+            <div class="group-head"><h3 class="group-title">Outer finder</h3><span class="group-val"></span></div>
             <div class="style-grid" id="corner-square-style-grid">
               <button class="style-btn active" data-value="square" title="Square">
                 <svg viewBox="0 0 24 24">
@@ -208,26 +202,8 @@
                 </svg>
               </button>
             </div>
-          </div>
-        </section>
-
-        <!-- Corner Dot Style Section -->
-        <section class="control-section" data-section="cornerDot">
-          <button class="section-header" aria-expanded="false">
-            <div class="section-title">
-              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="4" />
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-              </svg>
-              <span>Corner Dot</span>
-            </div>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="section-body collapsed">
+          </div><div class="group">
+            <div class="group-head"><h3 class="group-title">Inner finder</h3><span class="group-val"></span></div>
             <div class="style-grid" id="corner-dot-style-grid">
               <button class="style-btn active" data-value="square" title="Square">
                 <svg viewBox="0 0 24 24">
@@ -242,26 +218,11 @@
             </div>
           </div>
         </section>
-
-        <!-- Colors Section -->
-        <section class="control-section" data-section="colors">
-          <button class="section-header" aria-expanded="false">
-            <div class="section-title">
-              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" />
-              </svg>
-              <span>Colors</span>
-            </div>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="section-body collapsed">
-            <!-- Dot Color -->
+        <section class="inspector-section" data-inspector-section="colors" aria-labelledby="inspector-title">
+          <div class="group">
+            <div class="group-head"><h3 class="group-title">Modules</h3><button type="button" class="pin-btn" data-pin-action="primary-color" aria-pressed="false" aria-label="Pin Primary color"><svg class="ic pin-off" aria-hidden="true"><use href="#ph-push-pin"/></svg><svg class="ic pin-on" aria-hidden="true"><use href="#ph-push-pin-fill"/></svg></button></div>
             <div class="color-group">
-              <label>Dot Color</label>
+              
               <div class="color-controls">
                 <div class="color-row">
                   <input type="color" id="dot-color" value="#000000" class="color-input" />
@@ -294,10 +255,10 @@
                 </div>
               </div>
             </div>
-
-            <!-- Corner Square Color -->
+          </div><div class="group">
+            <div class="group-head"><h3 class="group-title">Outer finder</h3></div>
             <div class="color-group">
-              <label>Corner Square Color</label>
+              
               <div class="color-controls">
                 <div class="color-row">
                   <input type="color" id="corner-square-color" value="#000000" class="color-input" />
@@ -325,10 +286,10 @@
                 </div>
               </div>
             </div>
-
-            <!-- Corner Dot Color -->
+          </div><div class="group">
+            <div class="group-head"><h3 class="group-title">Inner finder</h3></div>
             <div class="color-group">
-              <label>Corner Dot Color</label>
+              
               <div class="color-controls">
                 <div class="color-row">
                   <input type="color" id="corner-dot-color" value="#000000" class="color-input" />
@@ -356,38 +317,14 @@
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        <!-- Background Section -->
-        <section class="control-section" data-section="background">
-          <button class="section-header" aria-expanded="false">
-            <div class="section-title">
-              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <path d="M3 3l18 18" />
-              </svg>
-              <span>Background</span>
-            </div>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="section-body collapsed">
-            <div class="transparent-toggle-card">
-              <label class="transparent-toggle-btn" for="bg-transparent">
-                <input type="checkbox" id="bg-transparent" />
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <rect x="3" y="3" width="18" height="18" rx="2" />
-                  <line x1="3" y1="3" x2="21" y2="21" />
-                </svg>
-                <span>Transparent Background</span>
-              </label>
+          </div><div class="group">
+            <div class="group-head"><h3 class="group-title">Background</h3></div>
+                        <div class="toggle-row">
+              <label class="toggle-label" for="bg-transparent">Transparent</label>
+              <label class="toggle-switch"><input type="checkbox" id="bg-transparent" /><span class="toggle-slider"></span></label>
             </div>
             <div class="color-group" id="bg-color-group">
-              <label>Background Color</label>
+              
               <div class="color-controls">
                 <div class="color-row">
                   <input type="color" id="bg-color" value="#FFFFFF" class="color-input" />
@@ -397,33 +334,13 @@
             </div>
           </div>
         </section>
-
-        <!-- Logo Section -->
-        <section class="control-section" data-section="logo">
-          <button class="section-header" aria-expanded="false">
-            <div class="section-title">
-              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <rect x="3" y="3" width="18" height="18" rx="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg>
-              <span>Logo / Image</span>
-            </div>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="section-body collapsed">
-            <div class="input-group">
-              <label class="file-upload" id="logo-upload-area">
+        <section class="inspector-section" data-inspector-section="logo" aria-labelledby="inspector-title">
+          <div class="group">
+            <div class="group-head"><h3 class="group-title">Logo</h3></div>
+                        <div class="input-group">
+              <label class="file-upload" id="logo-upload-area" tabindex="0">
                 <input type="file" id="logo-upload" accept="image/*" hidden />
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="17 8 12 3 7 8" />
-                  <line x1="12" y1="3" x2="12" y2="15" />
-                </svg>
+                <svg class="ic ic-lg" aria-hidden="true"><use href="#ph-upload-simple"/></svg>
                 <span id="logo-upload-text">Click to upload a logo</span>
               </label>
               <button class="btn-sm btn-danger hidden" id="logo-remove">Remove Logo</button>
@@ -439,7 +356,7 @@
               <span class="range-value" id="logo-margin-val">5px</span>
             </div>
             <div class="color-group hidden" id="logo-bg-group">
-              <label>Logo Background</label>
+              <span class="sub-title">Logo background</span>
               <div class="color-controls">
                 <div class="logo-shape-grid">
                   <button class="style-btn active" data-value="none" title="None (Transparent)">
@@ -472,106 +389,47 @@
             </div>
           </div>
         </section>
-
-        <!-- Settings Section -->
-        <section class="control-section" data-section="settings">
-          <button class="section-header" aria-expanded="false">
-            <div class="section-title">
-              <svg class="section-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                stroke-width="2">
-                <circle cx="12" cy="12" r="3" />
-                <path
-                  d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
-              </svg>
-              <span>Settings</span>
-            </div>
-            <svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-              stroke-width="2">
-              <polyline points="6 9 12 15 18 9" />
-            </svg>
-          </button>
-          <div class="section-body collapsed">
-            <div class="input-group">
-              <label for="qr-size">QR Code Size</label>
-              <input type="range" id="qr-size" min="150" max="600" step="10" value="300" />
-              <span class="range-value" id="qr-size-val">300px</span>
-            </div>
-            <div class="input-group">
-              <label for="qr-margin">Quiet Zone (Margin)</label>
-              <input type="range" id="qr-margin" min="0" max="50" step="1" value="10" />
-              <span class="range-value" id="qr-margin-val">10px</span>
-            </div>
-            <div class="input-group">
-              <label>Error Correction</label>
-              <div class="ec-grid">
+        <section class="inspector-section" data-inspector-section="scan-quality" aria-labelledby="inspector-title">
+          <div class="group">
+            <div class="group-head"><h3 class="group-title">Error correction</h3><button type="button" class="pin-btn" data-pin-action="error-correction" aria-pressed="false" aria-label="Pin Error correction"><svg class="ic pin-off" aria-hidden="true"><use href="#ph-push-pin"/></svg><svg class="ic pin-on" aria-hidden="true"><use href="#ph-push-pin-fill"/></svg></button></div>
+            <div class="ec-grid">
                 <button class="ec-btn" data-value="L" title="Low (~7% recovery)">L</button>
                 <button class="ec-btn" data-value="M" title="Medium (~15% recovery)">M</button>
                 <button class="ec-btn active" data-value="Q" title="Quartile (~25% recovery)">Q</button>
                 <button class="ec-btn" data-value="H" title="High (~30% recovery)">H</button>
               </div>
               <p class="hint">Higher = more damage resistant, denser code. Use Q or H when adding a logo.</p>
+          </div>            <div class="input-group range-group">
+              <label class="group-title" for="qr-margin">Quiet zone</label><button type="button" class="pin-btn" data-pin-action="quiet-zone" aria-pressed="false" aria-label="Pin Quiet zone"><svg class="ic pin-off" aria-hidden="true"><use href="#ph-push-pin"/></svg><svg class="ic pin-on" aria-hidden="true"><use href="#ph-push-pin-fill"/></svg></button>
+              <input type="range" id="qr-margin" min="0" max="50" step="1" value="10" />
+              <span class="range-value" id="qr-margin-val">10px</span>
+            </div>
+        </section>
+        <section class="inspector-section" data-inspector-section="output" aria-labelledby="inspector-title">
+                      <div class="input-group range-group">
+              <label class="group-title" for="qr-size">Output size</label><button type="button" class="pin-btn" data-pin-action="output-size" aria-pressed="false" aria-label="Pin Output size"><svg class="ic pin-off" aria-hidden="true"><use href="#ph-push-pin"/></svg><svg class="ic pin-on" aria-hidden="true"><use href="#ph-push-pin-fill"/></svg></button>
+              <input type="range" id="qr-size" min="150" max="600" step="10" value="300" />
+              <span class="range-value" id="qr-size-val">300px</span>
+            </div><div class="group">
+            <div class="group-head"><h3 class="group-title">Download</h3></div>
+            <div class="export-grid">
+              <button type="button" class="btn-secondary" id="export-png"><svg class="ic " aria-hidden="true"><use href="#ph-download-simple"/></svg>PNG</button>
+              <button type="button" class="btn-secondary" id="export-svg"><svg class="ic " aria-hidden="true"><use href="#ph-download-simple"/></svg>SVG</button>
+              <button type="button" class="btn-secondary" id="export-jpeg"><svg class="ic " aria-hidden="true"><use href="#ph-download-simple"/></svg>JPEG</button>
             </div>
           </div>
         </section>
-      </aside>
-
-      <!-- Preview Panel -->
-      <section class="preview-panel">
-        <div class="preview-container">
-          <div class="preview-card">
-            <div id="qr-preview" class="qr-preview"></div>
-          </div>
-          <div class="export-bar">
-            <button class="export-btn" id="export-png">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              PNG
-            </button>
-            <button class="export-btn" id="export-svg">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              SVG
-            </button>
-            <button class="export-btn" id="export-jpeg">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-              JPEG
-            </button>
-          </div>
-        </div>
-      </section>
-    </main>
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="footer-content">
-        <p class="footer-copyright">&copy; <span id="footer-year"></span> Aedwon. All rights reserved.</p>
-        <div class="footer-links">
-          <a href="#" id="terms-link">Terms of Use</a>
-          <span class="footer-sep">&middot;</span>
-          <a href="#" id="privacy-link">Privacy Policy</a>
-          <span class="footer-sep">&middot;</span>
-          <a href="#" id="feedback-link">Send Feedback</a>
-        </div>
-        <p class="footer-notice">Unauthorized reproduction, redistribution, or resale of this application or its
-          generated content for commercial purposes without explicit permission from Aedwon is strictly prohibited.</p>
       </div>
-    </footer>
+    </aside>
   </div>
+
+  <div id="panel-backdrop" class="panel-backdrop" hidden></div>
 
   <!-- Terms of Use Modal -->
   <div class="modal-overlay hidden" id="terms-modal">
-    <div class="modal-card">
-      <button class="modal-close" id="terms-close">&times;</button>
-      <h2>Terms of Use</h2>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="terms-title">
+      <button class="modal-close" id="terms-close" aria-label="Close Terms of Use"><svg class="ic " aria-hidden="true"><use href="#ph-x"/></svg></button>
+      <h2 id="terms-title">Terms of Use</h2>
       <div class="modal-body">
         <p><strong>Last updated:</strong> February 2026</p>
         <p>By accessing or using QR Studio by Aedwon (&ldquo;the Service&rdquo;), you agree to be bound by these Terms
@@ -616,9 +474,9 @@
 
   <!-- Privacy Policy Modal -->
   <div class="modal-overlay hidden" id="privacy-modal">
-    <div class="modal-card">
-      <button class="modal-close" id="privacy-close">&times;</button>
-      <h2>Privacy Policy</h2>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="privacy-title">
+      <button class="modal-close" id="privacy-close" aria-label="Close Privacy Policy"><svg class="ic " aria-hidden="true"><use href="#ph-x"/></svg></button>
+      <h2 id="privacy-title">Privacy Policy</h2>
       <div class="modal-body">
         <p><strong>Last updated:</strong> February 2026</p>
         <p>QR Studio by Aedwon (&ldquo;the Service&rdquo;) is committed to protecting your privacy. This policy explains
@@ -627,15 +485,7 @@
           <li><strong>QR Code Generation.</strong> All QR code generation and customization happens entirely within your
             web browser using client-side JavaScript. The data you enter (URLs, text, etc.) never leaves your
             device.</li>
-          <li><strong>Analytics.</strong> We use Google Analytics (GA4) to understand how the Service is used. Google
-            Analytics collects anonymized usage data such as pages visited, actions taken, browser type, and general
-            geographic region. This data is aggregated and cannot be used to personally identify you. You can opt out by
-            installing the <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">Google
-              Analytics Opt-out Browser Add-on</a>.</li>
-          <li><strong>Feedback Submissions.</strong> If you choose to submit feedback through the in-app form, your
-            message and the name you optionally provide are sent via a third-party form service (Web3Forms) and
-            forwarded
-            to Aedwon via email. No other personal data is collected or stored from feedback submissions.</li>
+          <li><strong>Analytics.</strong> The Service does not use analytics, advertising trackers, or cookies, and makes no network requests with the data you enter.</li>
           <li><strong>Uploaded Images.</strong> Any logos or images you upload for embedding in QR codes are processed
             entirely in your browser&rsquo;s memory. They are never uploaded to any server, stored in any database, or
             shared with any third party. Images are discarded when you close or refresh the page.</li>
@@ -647,49 +497,12 @@
           <li><strong>Changes to This Policy.</strong> We may update this Privacy Policy from time to time. Changes will
             be reflected by the &ldquo;Last updated&rdquo; date at the top of this policy.</li>
         </ol>
-        <p>If you have questions about this policy, you may contact Aedwon through the feedback form or channels listed
+        <p>If you have questions about this policy, you may contact Aedwon through the channels listed
           on the official website.</p>
       </div>
     </div>
   </div>
 
-  <!-- Feedback Modal -->
-  <div class="modal-overlay hidden" id="feedback-modal">
-    <div class="modal-card">
-      <button class="modal-close" id="feedback-close">&times;</button>
-      <h2>Send Feedback</h2>
-      <div class="modal-body">
-        <p>Have a suggestion, found a bug, or just want to say hello? We&rsquo;d love to hear from you.</p>
-        <form id="feedback-form" action="https://api.web3forms.com/submit" method="POST">
-          <input type="hidden" name="access_key" value="0bcf6f1e-c50e-4cde-a98b-8c0224a4207b" />
-          <input type="hidden" name="subject" value="QR Studio Feedback" />
-          <input type="hidden" name="from_name" value="QR Studio Feedback Form" />
-          <!-- Honeypot spam protection -->
-          <input type="checkbox" name="botcheck" class="hidden" style="display:none" />
-          <div class="form-group">
-            <label for="feedback-name">Name <span class="optional">(optional)</span></label>
-            <input type="text" id="feedback-name" name="name" placeholder="Your name" class="form-input" />
-          </div>
-          <div class="form-group">
-            <label for="feedback-type">Feedback Type</label>
-            <select id="feedback-type" name="type" class="form-input">
-              <option value="suggestion">Suggestion</option>
-              <option value="bug">Bug Report</option>
-              <option value="feature">Feature Request</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label for="feedback-message">Message</label>
-            <textarea id="feedback-message" name="message" placeholder="Tell us what you think..." rows="4"
-              class="form-input" required></textarea>
-          </div>
-          <button type="submit" class="feedback-submit-btn" id="feedback-submit">Send Feedback</button>
-          <p class="feedback-status hidden" id="feedback-status"></p>
-        </form>
-      </div>
-    </div>
-  </div>
 
   <script type="module" src="/src/main.js"></script>
 </body>

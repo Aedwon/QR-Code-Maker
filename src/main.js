@@ -3,7 +3,21 @@
    ======================================== */
 
 import QRCodeStyling from 'qr-code-styling';
+import '@fontsource/inter/400.css';
+import '@fontsource/inter/500.css';
+import '@fontsource/inter/600.css';
+import { initTheme, setAppearance, getAppearance } from './theme.js';
+import { initShell } from './ui/shell.js';
+import { initPins } from './ui/pins.js';
+import { initColorPicker } from './ui/color-picker.js';
+import { initSlidingSegments } from './ui/sliding-segments.js';
+import { renderPresetThumb, initShapeGlyphs } from './ui/preset-thumbs.js';
 import './style.css';
+
+initTheme();
+initShapeGlyphs();
+initColorPicker();
+initSlidingSegments();
 
 // ── Presets ──────────────────────────────────────────────────
 const PRESETS = {
@@ -96,6 +110,7 @@ let logoBgShape = 'none'; // none | circle | square | rounded
 let logoBgColor = '#FFFFFF';
 let debounceTimer = null;
 let skipPresetDeselect = false;
+let pinController = null;
 
 // ── Preset Deselection ──────────────────────────────────────
 // Called by every manual control change to deselect the active preset.
@@ -105,6 +120,19 @@ function deselectPreset() {
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
 }
 
+// Replace the flat swatches with mini QR thumbnails.
+document.querySelectorAll('.preset-btn').forEach(btn => {
+    const key = btn.dataset.preset;
+    const holder = btn.querySelector('.preset-preview');
+    if (!PRESETS[key] || !holder) return;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 40 40');
+    svg.setAttribute('class', 'preset-preview');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = renderPresetThumb(key, PRESETS[key]);
+    holder.replaceWith(svg);
+});
+
 // ── QR Code Instance ────────────────────────────────────────
 const qrCode = new QRCodeStyling(currentOptions);
 
@@ -112,12 +140,37 @@ const previewEl = document.getElementById('qr-preview');
 qrCode.append(previewEl);
 
 // ── Debounced Update ────────────────────────────────────────
+function pulsePreview() {
+    previewEl.classList.remove('is-updating');
+    void previewEl.offsetWidth;
+    previewEl.classList.add('is-updating');
+}
+
+let rafId = 0;
+// The library empties the preview and redraws from blank, which flashes while
+// dragging. Keep the previous frame on top until the new one is drawn.
+function renderQR(pulse) {
+    const old = previewEl.firstElementChild;
+    qrCode.update(buildOptions());
+    if (old && !old.isConnected) {
+        old.classList.add('qr-ghost');
+        previewEl.append(old);
+        const done = () => requestAnimationFrame(() => requestAnimationFrame(() => old.remove()));
+        Promise.resolve(qrCode._canvasDrawingPromise).then(done, done);
+    }
+    if (pulse) pulsePreview();
+}
+
+// Sliders redraw on the next frame so the preview tracks the thumb live;
+// everything else keeps a short debounce.
 function updateQR() {
     clearTimeout(debounceTimer);
-    debounceTimer = setTimeout(() => {
-        const opts = buildOptions();
-        qrCode.update(opts);
-    }, 150);
+    const dragging = document.activeElement?.type === 'range';
+    if (dragging) {
+        if (!rafId) rafId = requestAnimationFrame(() => { rafId = 0; renderQR(false); });
+        return;
+    }
+    debounceTimer = setTimeout(() => renderQR(true), 150);
 }
 
 function buildOptions() {
@@ -200,24 +253,11 @@ function compositeLogoWithBackground() {
     });
 }
 
-// ── Section Collapsing ──────────────────────────────────────
-document.querySelectorAll('.section-header').forEach(header => {
-    header.addEventListener('click', () => {
-        const expanded = header.getAttribute('aria-expanded') === 'true';
-        header.setAttribute('aria-expanded', !expanded);
-        const body = header.nextElementSibling;
-        if (expanded) {
-            body.classList.add('collapsed');
-        } else {
-            body.classList.remove('collapsed');
-        }
-    });
-});
-
 // ── Content Input ───────────────────────────────────────────
 const dataInput = document.getElementById('qr-data');
 const charCounterFill = document.getElementById('char-counter-fill');
 const charCounterText = document.getElementById('char-counter-text');
+const charCounterMsg = document.getElementById('char-counter-msg');
 
 // Max byte capacity per error correction level (binary/UTF-8 mode)
 const EC_LIMITS = { L: 2953, M: 2331, Q: 1663, H: 1273 };
@@ -230,18 +270,19 @@ function updateCharCounter() {
 
     charCounterFill.style.width = pct + '%';
     charCounterFill.classList.remove('warn', 'danger');
-    charCounterText.classList.remove('warn', 'danger');
+    charCounterMsg.classList.remove('warn', 'danger');
+    charCounterText.textContent = `${len.toLocaleString('en-US')} / ${max.toLocaleString('en-US')} bytes`;
 
     if (len > max) {
         charCounterFill.classList.add('danger');
-        charCounterText.classList.add('danger');
-        charCounterText.textContent = `${len} / ${max} bytes — too long!`;
+        charCounterMsg.classList.add('danger');
+        charCounterMsg.textContent = `Too long for level ${ecLevel}. Shorten the text or lower error correction.`;
     } else if (pct >= 75) {
         charCounterFill.classList.add('warn');
-        charCounterText.classList.add('warn');
-        charCounterText.textContent = `${len} / ${max} bytes`;
+        charCounterMsg.classList.add('warn');
+        charCounterMsg.textContent = `Nearly full for level ${ecLevel}.`;
     } else {
-        charCounterText.textContent = `${len} characters`;
+        charCounterMsg.textContent = `Fits at level ${ecLevel}.`;
     }
 }
 
@@ -283,16 +324,20 @@ document.querySelectorAll('.preset-btn').forEach(btn => {
         skipPresetDeselect = false;
 
         updateQR();
-        if (typeof gtag === 'function') gtag('event', 'select_preset', { preset_name: btn.dataset.preset });
+        pinController?.syncAll();
     });
 });
 
 // ── Dot Style ───────────────────────────────────────────────
-setupStyleGrid('dot-style-grid', (value) => {
+setupStyleGrid('dot-style-grid', (value) => setModuleShape(value));
+
+function setModuleShape(value) {
     currentOptions.dotsOptions.type = value;
+    syncStyleGrid('dot-style-grid', value);
     deselectPreset();
     updateQR();
-});
+    pinController?.sync('module-shape');
+}
 
 // ── Corner Square Style ─────────────────────────────────────
 setupStyleGrid('corner-square-style-grid', (value) => {
@@ -323,15 +368,23 @@ function setupStyleGrid(gridId, callback) {
 // ── Color Controls ──────────────────────────────────────────
 
 // Dot color
-setupColorPair('dot-color', 'dot-color-hex', (color) => {
+setupColorPair('dot-color', 'dot-color-hex', (color) => setPrimaryColor(color));
+
+// Primary color is the flat module color, or the gradient start when a gradient is on.
+function setPrimaryColor(value) {
     if (!currentOptions.dotsOptions.gradient) {
-        currentOptions.dotsOptions.color = color;
+        currentOptions.dotsOptions.color = value;
     } else {
-        currentOptions.dotsOptions.gradient.colorStops[0].color = color;
+        currentOptions.dotsOptions.gradient.colorStops[0].color = value;
     }
+    const colorEl = document.getElementById('dot-color');
+    const hexEl = document.getElementById('dot-color-hex');
+    if (colorEl.value.toLowerCase() !== value.toLowerCase()) colorEl.value = value;
+    if (hexEl.value.toLowerCase() !== value.toLowerCase()) hexEl.value = value.toUpperCase();
     deselectPreset();
     updateQR();
-});
+    pinController?.sync('primary-color');
+}
 
 // Dot gradient
 setupGradientToggle('dot-gradient-toggle', 'dot-gradient-controls', (enabled) => {
@@ -520,10 +573,13 @@ const logoRemoveBtn = document.getElementById('logo-remove');
 const logoOptionsEl = document.getElementById('logo-options');
 const logoMarginGroup = document.getElementById('logo-margin-group');
 
+logoUploadArea.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); logoUpload.click(); }
+});
+
 logoUpload.addEventListener('change', (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    if (typeof gtag === 'function') gtag('event', 'upload_logo');
     const reader = new FileReader();
     reader.onload = (evt) => {
         logoOriginalDataUrl = evt.target.result;
@@ -536,8 +592,7 @@ logoUpload.addEventListener('change', (e) => {
         document.getElementById('logo-bg-group').classList.remove('hidden');
 
         // Boost error correction when using a logo
-        currentOptions.qrOptions.errorCorrectionLevel = 'H';
-        syncECButtons('H');
+        setErrorCorrection('H');
 
         compositeLogoWithBackground().then(() => updateQR());
     };
@@ -562,10 +617,7 @@ logoRemoveBtn.addEventListener('click', () => {
     document.getElementById('logo-bg-color-row').classList.add('hidden');
 
     // Reset error correction back to Q (was boosted to H for logo)
-    currentOptions.qrOptions.errorCorrectionLevel = 'Q';
-    syncECButtons('Q');
-
-    updateQR();
+    setErrorCorrection('Q');
 });
 
 setupRange('logo-size', 'logo-size-val', (val) => {
@@ -603,43 +655,51 @@ setupColorPair('logo-bg-color', 'logo-bg-color-hex', (color) => {
 });
 
 // ── Settings Controls ───────────────────────────────────────
-setupRange('qr-size', 'qr-size-val', (val) => {
-    currentOptions.width = parseInt(val);
-    currentOptions.height = parseInt(val);
-    updateQR();
-}, 'px');
+setupRange('qr-size', 'qr-size-val', (val) => setOutputSize(val), 'px');
+setupRange('qr-margin', 'qr-margin-val', (val) => setQuietZone(val), 'px');
 
-setupRange('qr-margin', 'qr-margin-val', (val) => {
-    currentOptions.margin = parseInt(val);
+function setOutputSize(value) {
+    currentOptions.width = Number(value);
+    currentOptions.height = Number(value);
+    document.getElementById('qr-size').value = String(value);
+    document.getElementById('qr-size-val').textContent = `${value}px`;
     updateQR();
-}, 'px');
+    pinController?.sync('output-size');
+}
+
+function setQuietZone(value) {
+    currentOptions.margin = Number(value);
+    document.getElementById('qr-margin').value = String(value);
+    document.getElementById('qr-margin-val').textContent = `${value}px`;
+    updateQR();
+    pinController?.sync('quiet-zone');
+}
 
 // Error correction buttons
 document.querySelectorAll('.ec-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-        document.querySelectorAll('.ec-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentOptions.qrOptions.errorCorrectionLevel = btn.dataset.value;
-        updateCharCounter();
-        updateQR();
+        setErrorCorrection(btn.dataset.value);
     });
 });
 
+function setErrorCorrection(value) {
+    currentOptions.qrOptions.errorCorrectionLevel = value;
+    syncECButtons(value);
+    updateCharCounter();
+    updateQR();
+    pinController?.sync('error-correction');
+}
+
 // ── Export ───────────────────────────────────────────────────
-document.getElementById('export-png').addEventListener('click', () => {
-    qrCode.download({ name: 'qr-code', extension: 'png' });
-    if (typeof gtag === 'function') gtag('event', 'export_qr', { format: 'png' });
-});
+// Single download path shared by Output exports and the Workspace quick download.
+function downloadQR(extension) {
+    qrCode.download({ name: 'qr-code', extension });
+}
 
-document.getElementById('export-svg').addEventListener('click', () => {
-    qrCode.download({ name: 'qr-code', extension: 'svg' });
-    if (typeof gtag === 'function') gtag('event', 'export_qr', { format: 'svg' });
-});
-
-document.getElementById('export-jpeg').addEventListener('click', () => {
-    qrCode.download({ name: 'qr-code', extension: 'jpeg' });
-    if (typeof gtag === 'function') gtag('event', 'export_qr', { format: 'jpeg' });
-});
+document.getElementById('export-png').addEventListener('click', () => downloadQR('png'));
+document.getElementById('export-svg').addEventListener('click', () => downloadQR('svg'));
+document.getElementById('export-jpeg').addEventListener('click', () => downloadQR('jpeg'));
+document.getElementById('quick-download-png').addEventListener('click', () => downloadQR('png'));
 
 // ── Helpers ─────────────────────────────────────────────────
 
@@ -773,76 +833,66 @@ function syncStyleGrid(gridId, activeValue) {
 const footerYear = document.getElementById('footer-year');
 if (footerYear) footerYear.textContent = new Date().getFullYear();
 
-// ── Modal Logic ─────────────────────────────────────────────
+// ── Legal Modals ────────────────────────────────────────────
+// Lightweight dialogs: Escape and the close button dismiss, focus returns to
+// the trigger, and the app shell is inert while a dialog is open.
 function setupModal(linkId, modalId, closeId) {
     const link = document.getElementById(linkId);
     const modal = document.getElementById(modalId);
     const close = document.getElementById(closeId);
     if (!link || !modal) return;
+    const shell = document.getElementById('app-shell');
 
-    link.addEventListener('click', (e) => {
-        e.preventDefault();
+    function open() {
         modal.classList.remove('hidden');
-    });
-
-    if (close) {
-        close.addEventListener('click', () => modal.classList.add('hidden'));
+        shell.inert = true;
+        close?.focus();
+    }
+    function dismiss() {
+        modal.classList.add('hidden');
+        shell.inert = false;
+        link.focus();
     }
 
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) modal.classList.add('hidden');
+    link.addEventListener('click', (e) => { e.preventDefault(); open(); });
+    close?.addEventListener('click', dismiss);
+    modal.addEventListener('click', (e) => { if (e.target === modal) dismiss(); });
+    modal.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') { e.stopPropagation(); dismiss(); }
     });
 }
 
 setupModal('terms-link', 'terms-modal', 'terms-close');
 setupModal('privacy-link', 'privacy-modal', 'privacy-close');
-setupModal('feedback-link', 'feedback-modal', 'feedback-close');
-
-// ── Feedback Form (AJAX) ────────────────────────────────────
-const feedbackForm = document.getElementById('feedback-form');
-if (feedbackForm) {
-    feedbackForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const submitBtn = document.getElementById('feedback-submit');
-        const status = document.getElementById('feedback-status');
-        const originalText = submitBtn.textContent;
-
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Sending...';
-        status.classList.add('hidden');
-        status.className = 'feedback-status hidden';
-
-        try {
-            const formData = new FormData(feedbackForm);
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                body: formData,
-            });
-            const result = await response.json();
-
-            if (result.success) {
-                status.textContent = 'Thank you! Your feedback has been sent.';
-                status.classList.remove('hidden');
-                status.classList.add('success');
-                feedbackForm.reset();
-                if (typeof gtag === 'function') gtag('event', 'feedback_submitted', { type: formData.get('type') });
-            } else {
-                throw new Error(result.message || 'Submission failed');
-            }
-        } catch (err) {
-            status.textContent = 'Something went wrong. Please try again.';
-            status.classList.remove('hidden');
-            status.classList.add('error');
-        }
-
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-    });
-}
 
 // ── Right-click Protection ──────────────────────────────────
 document.addEventListener('contextmenu', (e) => {
     // Allow right-click on inputs for paste, but block on the app itself
     if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
     e.preventDefault();
+});
+
+// ── Appearance Controls ─────────────────────────────────────
+const appearanceButtons = document.querySelectorAll('[data-appearance-mode]');
+function syncAppearanceButtons() {
+    appearanceButtons.forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.appearanceMode === getAppearance()));
+    });
+}
+appearanceButtons.forEach((b) => b.addEventListener('click', () => setAppearance(b.dataset.appearanceMode)));
+document.addEventListener('appearancechange', syncAppearanceButtons);
+syncAppearanceButtons();
+
+// ── Shell and Pinned Controls ───────────────────────────────
+initShell({ defaultSection: 'style' });
+
+pinController = initPins({
+    root: document.getElementById('pinned-controls'),
+    settings: {
+        'module-shape': { get: () => currentOptions.dotsOptions.type, set: setModuleShape },
+        'primary-color': { get: () => document.getElementById('dot-color').value, set: setPrimaryColor },
+        'error-correction': { get: () => currentOptions.qrOptions.errorCorrectionLevel, set: setErrorCorrection },
+        'quiet-zone': { get: () => currentOptions.margin, set: setQuietZone },
+        'output-size': { get: () => currentOptions.width, set: setOutputSize },
+    },
 });

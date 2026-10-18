@@ -79,7 +79,7 @@ The lower utility area contains:
 
 - Privacy
 - Terms of Use
-- Feedback
+- Feedback (only when a real external destination exists; omitted otherwise)
 - Light / dark / system theme controls
 
 Keep these visually subordinate to the main feature navigation.
@@ -290,7 +290,7 @@ Utility items are exceptions:
 
 - `Privacy` opens the privacy surface directly, not Inspector.
 - `Terms of Use` opens the terms surface directly, not Inspector.
-- `Feedback` opens its relevant surface/action directly, not Inspector.
+- `Feedback`, when present, opens its external destination directly, not Inspector. It is omitted until a real destination is supplied.
 - Theme controls apply the selected appearance in place. Navigation should remain open after a theme change unless a later narrow-screen constraint provides a stronger reason to close it.
 
 After configuration, closing Inspector returns the user directly to the unchanged workspace.

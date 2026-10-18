@@ -145,14 +145,16 @@ The app should remain local-first by default:
 
 ## Privacy Migration Notes
 
-The current implementation still contains network-dependent behavior that should be removed or changed to fully satisfy the local-only product principle:
+The network-dependent behavior has been removed, so normal use makes no third-party requests:
 
-- Remove Google Analytics telemetry.
-- Replace Google Fonts CDN loading with locally bundled fonts or system fonts.
-- Replace the embedded Web3Forms feedback flow with an explicitly external feedback link, or remove feedback submission from the app.
+- Google Analytics telemetry is removed.
+- Fonts (Inter) are bundled locally instead of loaded from Google Fonts.
+- The embedded Web3Forms feedback flow is removed. There is no in-app feedback submission.
 
-These changes are part of bringing the existing implementation in line with the intended privacy model.
+Offline/PWA support is not implemented yet and remains `[NEW]`.
 
 ## Design Direction
 
-See [`DESIGN.md`](./DESIGN.md) for the design philosophy and interaction principles that should guide future UX decisions.
+- [`DESIGN.md`](./DESIGN.md): design philosophy and interaction principles.
+- [`DESIGN-TOKENS.md`](./DESIGN-TOKENS.md): palette, typography, spacing, and motion tokens.
+- [`UI-PATTERNS.md`](./UI-PATTERNS.md): component and layout patterns.
