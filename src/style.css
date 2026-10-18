@@ -460,7 +460,8 @@ html[data-theme="dark"] .preset-preview { box-shadow: none; }
 @media (max-width: 899px) {
   :root { --gut: 16px; --prev: clamp(220px, 46dvh, 360px); }
 
-  .app-shell { display: block; height: 100dvh; padding: var(--gut); }
+  /* No stacking context here, so the fixed panels (z 30) sit above the backdrop (z 25). */
+  .app-shell { display: block; height: 100dvh; padding: var(--gut); z-index: auto; }
   .workspace { height: 100%; }
 
   .ws-bar {
