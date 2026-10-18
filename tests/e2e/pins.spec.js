@@ -23,12 +23,12 @@ test('pinned module shape and the native control share one value', async ({ page
   await expect(pinBtn(page, 'module-shape')).toHaveAttribute('aria-pressed', 'true');
 
   const before = await getPreviewSignature(page);
-  await pinned(page, 'module-shape').locator('select').selectOption('dots');
+  await pinned(page, 'module-shape').getByRole('button', { name: 'Dots' }).click();
   await expect(page.locator('#dot-style-grid .style-btn[data-value="dots"]')).toHaveClass(/active/);
   await expect.poll(() => getPreviewSignature(page)).not.toBe(before);
 
   await page.locator('#dot-style-grid .style-btn[data-value="rounded"]').click();
-  await expect(pinned(page, 'module-shape').locator('select')).toHaveValue('rounded');
+  await expect(pinned(page, 'module-shape').getByRole('button', { name: 'Rounded', exact: true })).toHaveAttribute('aria-pressed', 'true');
 });
 
 test('native controls stay in their home sections after pinning', async ({ page }) => {
@@ -89,7 +89,7 @@ test('presets update pinned shape and color mirrors', async ({ page }) => {
   await pinBtn(page, 'primary-color').click();
   await openSection(page, 'style');
   await page.locator('.preset-btn[data-preset="dots"]').click();
-  await expect(pinned(page, 'module-shape').locator('select')).toHaveValue('dots');
+  await expect(pinned(page, 'module-shape').getByRole('button', { name: 'Dots' })).toHaveAttribute('aria-pressed', 'true');
   await expect(pinned(page, 'primary-color').locator('input[type="color"]')).toHaveValue('#333333');
 });
 

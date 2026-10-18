@@ -1,3 +1,5 @@
+import { moduleGlyph } from './preset-thumbs.js';
+
 // Curated pinned controls: a small dock at the top of the Inspector that mirrors
 // five approved settings. Native controls stay in their home sections; both views
 // read and write through the supplied { get, set } pair, so there is one value.
@@ -67,14 +69,21 @@ export function initPins({ root, settings, storage = window.localStorage }) {
     const set = settings[key].set;
     const id = `pin-${key}`;
     if (key === 'module-shape') {
-      const sel = document.createElement('select');
-      sel.id = id;
-      sel.className = 'pin-select';
-      sel.setAttribute('aria-label', DEFS[key].label);
-      sel.innerHTML = SHAPES.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
-      sel.addEventListener('change', () => set(sel.value));
-      updaters.set(key, () => { sel.value = settings[key].get(); });
-      return sel;
+      const grp = document.createElement('div');
+      grp.className = 'seg mini';
+      grp.setAttribute('role', 'group');
+      grp.setAttribute('aria-label', DEFS[key].label);
+      grp.innerHTML = SHAPES.map(([v, l]) =>
+        `<button type="button" class="seg-btn" data-shape="${v}" aria-label="${l}" title="${l}"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" fill="currentColor" d="${moduleGlyph(v)}"/></svg></button>`).join('');
+      grp.addEventListener('click', (e) => {
+        const b = e.target.closest('[data-shape]');
+        if (b) set(b.dataset.shape);
+      });
+      updaters.set(key, () => {
+        const v = settings[key].get();
+        grp.querySelectorAll('[data-shape]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.shape === v)));
+      });
+      return grp;
     }
     if (key === 'primary-color') {
       const row = document.createElement('div');
@@ -96,10 +105,10 @@ export function initPins({ root, settings, storage = window.localStorage }) {
     }
     if (key === 'error-correction') {
       const grp = document.createElement('div');
-      grp.className = 'ec-grid pin-ec';
+      grp.className = 'seg mini';
       grp.setAttribute('role', 'group');
       grp.setAttribute('aria-label', DEFS[key].label);
-      grp.innerHTML = EC_LEVELS.map((l) => `<button type="button" class="ec-btn" data-level="${l}">${l}</button>`).join('');
+      grp.innerHTML = EC_LEVELS.map((l) => `<button type="button" class="seg-btn" data-level="${l}">${l}</button>`).join('');
       grp.addEventListener('click', (e) => {
         const b = e.target.closest('[data-level]');
         if (b) set(b.dataset.level);
@@ -108,7 +117,6 @@ export function initPins({ root, settings, storage = window.localStorage }) {
         const v = settings[key].get();
         grp.querySelectorAll('[data-level]').forEach((b) => {
           const on = b.dataset.level === v;
-          b.classList.toggle('active', on);
           b.setAttribute('aria-pressed', String(on));
         });
       });
@@ -166,7 +174,7 @@ export function initPins({ root, settings, storage = window.localStorage }) {
       item.dataset.pinnedKey = key;
       const label = DEFS[key].label;
       item.innerHTML = `<div class="dock-item-top">
-          <span class="dock-label">${label}</span>
+          ${icon('dots-six-vertical', 'grip')}<span class="dock-label">${DEFS[key].pinLabel}</span>
           <button type="button" class="icon-btn sm" data-move="up" aria-label="Move ${label} up" ${i === 0 ? 'disabled' : ''}>${icon('caret-up')}</button>
           <button type="button" class="icon-btn sm" data-move="down" aria-label="Move ${label} down" ${i === pins.length - 1 ? 'disabled' : ''}>${icon('caret-down')}</button>
           <button type="button" class="icon-btn sm on" data-unpin aria-label="Unpin ${label}">${icon('push-pin-fill')}</button>

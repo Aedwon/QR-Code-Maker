@@ -104,11 +104,11 @@
     </main>
 
     <aside id="app-inspector" class="app-inspector panel" aria-label="Inspector">
+      <div id="pinned-controls" class="dock" aria-label="Pinned controls" hidden></div>
       <div class="inspector-head">
         <h2 id="inspector-title" tabindex="-1">Style</h2>
         <button type="button" id="close-inspector" class="icon-btn sheet-close" aria-label="Close settings"><svg class="ic " aria-hidden="true"><use href="#ph-x"/></svg></button>
       </div>
-      <div id="pinned-controls" class="dock" aria-label="Pinned controls" hidden></div>
       <div class="inspector-body">
         <section class="inspector-section" data-inspector-section="style" aria-labelledby="inspector-title">
           <div class="group">
@@ -148,7 +148,7 @@
               </button>
             </div>
           </div><div class="group">
-            <div class="group-head"><h3 class="group-title">Module shape</h3><button type="button" class="pin-btn" data-pin-action="module-shape" aria-pressed="false" aria-label="Pin Module shape"><svg class="ic pin-off" aria-hidden="true"><use href="#ph-push-pin"/></svg><svg class="ic pin-on" aria-hidden="true"><use href="#ph-push-pin-fill"/></svg></button></div>
+            <div class="group-head"><h3 class="group-title">Module shape</h3><span class="group-val"></span><button type="button" class="pin-btn" data-pin-action="module-shape" aria-pressed="false" aria-label="Pin Module shape"><svg class="ic pin-off" aria-hidden="true"><use href="#ph-push-pin"/></svg><svg class="ic pin-on" aria-hidden="true"><use href="#ph-push-pin-fill"/></svg></button></div>
             <div class="style-grid" id="dot-style-grid">
               <button class="style-btn active" data-value="square" title="Square">
                 <svg viewBox="0 0 24 24">
@@ -184,7 +184,7 @@
               </button>
             </div>
           </div><div class="group">
-            <div class="group-head"><h3 class="group-title">Outer finder</h3></div>
+            <div class="group-head"><h3 class="group-title">Outer finder</h3><span class="group-val"></span></div>
             <div class="style-grid" id="corner-square-style-grid">
               <button class="style-btn active" data-value="square" title="Square">
                 <svg viewBox="0 0 24 24">
@@ -203,7 +203,7 @@
               </button>
             </div>
           </div><div class="group">
-            <div class="group-head"><h3 class="group-title">Inner finder</h3></div>
+            <div class="group-head"><h3 class="group-title">Inner finder</h3><span class="group-val"></span></div>
             <div class="style-grid" id="corner-dot-style-grid">
               <button class="style-btn active" data-value="square" title="Square">
                 <svg viewBox="0 0 24 24">
@@ -220,7 +220,7 @@
         </section>
         <section class="inspector-section" data-inspector-section="colors" aria-labelledby="inspector-title">
           <div class="group">
-            <div class="group-head"><h3 class="group-title">Module color</h3><button type="button" class="pin-btn" data-pin-action="primary-color" aria-pressed="false" aria-label="Pin Primary color"><svg class="ic pin-off" aria-hidden="true"><use href="#ph-push-pin"/></svg><svg class="ic pin-on" aria-hidden="true"><use href="#ph-push-pin-fill"/></svg></button></div>
+            <div class="group-head"><h3 class="group-title">Modules</h3><button type="button" class="pin-btn" data-pin-action="primary-color" aria-pressed="false" aria-label="Pin Primary color"><svg class="ic pin-off" aria-hidden="true"><use href="#ph-push-pin"/></svg><svg class="ic pin-on" aria-hidden="true"><use href="#ph-push-pin-fill"/></svg></button></div>
             <div class="color-group">
               
               <div class="color-controls">
@@ -256,7 +256,7 @@
               </div>
             </div>
           </div><div class="group">
-            <div class="group-head"><h3 class="group-title">Outer finder color</h3></div>
+            <div class="group-head"><h3 class="group-title">Outer finder</h3></div>
             <div class="color-group">
               
               <div class="color-controls">
@@ -287,7 +287,7 @@
               </div>
             </div>
           </div><div class="group">
-            <div class="group-head"><h3 class="group-title">Inner finder color</h3></div>
+            <div class="group-head"><h3 class="group-title">Inner finder</h3></div>
             <div class="color-group">
               
               <div class="color-controls">
@@ -320,7 +320,7 @@
           </div><div class="group">
             <div class="group-head"><h3 class="group-title">Background</h3></div>
                         <div class="toggle-row">
-              <label class="toggle-label" for="bg-transparent">Transparent background</label>
+              <label class="toggle-label" for="bg-transparent">Transparent</label>
               <label class="toggle-switch"><input type="checkbox" id="bg-transparent" /><span class="toggle-slider"></span></label>
             </div>
             <div class="color-group" id="bg-color-group">

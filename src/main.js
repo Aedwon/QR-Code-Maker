@@ -9,10 +9,11 @@ import '@fontsource/inter/600.css';
 import { initTheme, setAppearance, getAppearance } from './theme.js';
 import { initShell } from './ui/shell.js';
 import { initPins } from './ui/pins.js';
-import { renderPresetThumb } from './ui/preset-thumbs.js';
+import { renderPresetThumb, initShapeGlyphs } from './ui/preset-thumbs.js';
 import './style.css';
 
 initTheme();
+initShapeGlyphs();
 
 // ── Presets ──────────────────────────────────────────────────
 const PRESETS = {
