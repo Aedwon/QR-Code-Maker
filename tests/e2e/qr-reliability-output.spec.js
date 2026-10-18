@@ -14,13 +14,13 @@ test.beforeEach(async ({ page }) => {
 test('error correction changes the capacity limit', async ({ page }) => {
   await openSection(page, 'scan-quality');
   await page.locator('#qr-data').fill('x'.repeat(1400));
-  await expect(page.locator('#char-counter-text')).not.toContainText('too long');
+  await expect(page.locator('#char-counter-msg')).not.toContainText('Too long');
   await ec(page, 'H').click();
   await expect(ec(page, 'H')).toHaveClass(/active/);
-  await expect(page.locator('#char-counter-text')).toContainText('1273');
-  await expect(page.locator('#char-counter-text')).toContainText('too long');
+  await expect(page.locator('#char-counter-text')).toContainText('1,273');
+  await expect(page.locator('#char-counter-msg')).toContainText('Too long');
   await ec(page, 'L').click();
-  await expect(page.locator('#char-counter-text')).not.toContainText('too long');
+  await expect(page.locator('#char-counter-msg')).not.toContainText('Too long');
 });
 
 test('logo upload forces H and removal returns to Q', async ({ page }) => {

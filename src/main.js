@@ -9,6 +9,7 @@ import '@fontsource/inter/600.css';
 import { initTheme, setAppearance, getAppearance } from './theme.js';
 import { initShell } from './ui/shell.js';
 import { initPins } from './ui/pins.js';
+import { renderPresetThumb } from './ui/preset-thumbs.js';
 import './style.css';
 
 initTheme();
@@ -114,6 +115,19 @@ function deselectPreset() {
     document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
 }
 
+// Replace the flat swatches with mini QR thumbnails.
+document.querySelectorAll('.preset-btn').forEach(btn => {
+    const key = btn.dataset.preset;
+    const holder = btn.querySelector('.preset-preview');
+    if (!PRESETS[key] || !holder) return;
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 40 40');
+    svg.setAttribute('class', 'preset-preview');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML = renderPresetThumb(key, PRESETS[key]);
+    holder.replaceWith(svg);
+});
+
 // ── QR Code Instance ────────────────────────────────────────
 const qrCode = new QRCodeStyling(currentOptions);
 
@@ -213,6 +227,7 @@ function compositeLogoWithBackground() {
 const dataInput = document.getElementById('qr-data');
 const charCounterFill = document.getElementById('char-counter-fill');
 const charCounterText = document.getElementById('char-counter-text');
+const charCounterMsg = document.getElementById('char-counter-msg');
 
 // Max byte capacity per error correction level (binary/UTF-8 mode)
 const EC_LIMITS = { L: 2953, M: 2331, Q: 1663, H: 1273 };
@@ -225,18 +240,19 @@ function updateCharCounter() {
 
     charCounterFill.style.width = pct + '%';
     charCounterFill.classList.remove('warn', 'danger');
-    charCounterText.classList.remove('warn', 'danger');
+    charCounterMsg.classList.remove('warn', 'danger');
+    charCounterText.textContent = `${len.toLocaleString('en-US')} / ${max.toLocaleString('en-US')} bytes`;
 
     if (len > max) {
         charCounterFill.classList.add('danger');
-        charCounterText.classList.add('danger');
-        charCounterText.textContent = `${len} / ${max} bytes — too long!`;
+        charCounterMsg.classList.add('danger');
+        charCounterMsg.textContent = `Too long for level ${ecLevel}. Shorten the text or lower error correction.`;
     } else if (pct >= 75) {
         charCounterFill.classList.add('warn');
-        charCounterText.classList.add('warn');
-        charCounterText.textContent = `${len} / ${max} bytes`;
+        charCounterMsg.classList.add('warn');
+        charCounterMsg.textContent = `Nearly full for level ${ecLevel}.`;
     } else {
-        charCounterText.textContent = `${len} characters`;
+        charCounterMsg.textContent = `Fits at level ${ecLevel}.`;
     }
 }
 
