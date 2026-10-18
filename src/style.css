@@ -282,6 +282,8 @@ textarea:focus, .hex-input:focus, .pin-select:focus { outline: none; background:
   background: repeating-conic-gradient(var(--raised) 0% 25%, var(--surface) 0% 50%) 0 0 / 16px 16px;
   box-shadow: inset 0 0 0 1px var(--hair);
 }
+.qr-preview { position: relative; }
+.qr-preview .qr-ghost { position: absolute; inset: 0; z-index: 1; }
 .qr-preview canvas, .qr-preview svg { display: block; width: 100% !important; height: 100% !important; }
 
 .btn-primary {

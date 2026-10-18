@@ -147,8 +147,17 @@ function pulsePreview() {
 }
 
 let rafId = 0;
+// The library empties the preview and redraws from blank, which flashes while
+// dragging. Keep the previous frame on top until the new one is drawn.
 function renderQR(pulse) {
+    const old = previewEl.firstElementChild;
     qrCode.update(buildOptions());
+    if (old && !old.isConnected) {
+        old.classList.add('qr-ghost');
+        previewEl.append(old);
+        const done = () => requestAnimationFrame(() => requestAnimationFrame(() => old.remove()));
+        Promise.resolve(qrCode._canvasDrawingPromise).then(done, done);
+    }
     if (pulse) pulsePreview();
 }
 
