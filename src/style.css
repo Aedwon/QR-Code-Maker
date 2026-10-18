@@ -69,7 +69,7 @@
   --nav-w: 232px;
   --ins-w: 360px;
   --pad: 16px;
-  --prev: clamp(220px, 42dvh, 340px);
+  --prev: 320px;
 
   color-scheme: light;
 }
@@ -113,6 +113,7 @@ html[data-theme="dark"] {
     --gap: 16px;
     --nav-w: 188px;
     --ins-w: 304px;
+    --prev: 244px;
     --pad: 12px;
   }
 }
@@ -451,7 +452,7 @@ html[data-theme="dark"] .preset-preview { box-shadow: none; }
 .panel-backdrop { position: fixed; inset: 0; z-index: 25; background: var(--scrim); }
 
 @media (max-width: 899px) {
-  :root { --gut: 16px; --prev: clamp(220px, 46dvh, 360px); }
+  :root { --gut: 16px; --prev: 276px; }
 
   /* No stacking context here, so the fixed panels (z 30) sit above the backdrop (z 25). */
   .app-shell { display: block; height: 100dvh; padding: var(--gut); z-index: auto; }
@@ -502,9 +503,8 @@ html[data-theme="dark"] .preset-preview { box-shadow: none; }
 @media (max-width: 599px) {
   :root { --gut: 12px; }
   .app-nav { width: min(320px, calc(100vw - 2 * var(--gut))); }
-  .app-inspector { left: var(--gut); width: auto; }
+  .app-inspector { left: var(--gut); width: auto; top: calc(var(--gut) + 64px); }
   .input-card { padding: 12px; }
-  .style-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 
 /* ---------- Reduced motion & forced colors ---------- */
