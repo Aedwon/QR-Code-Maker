@@ -9,11 +9,13 @@ import '@fontsource/inter/600.css';
 import { initTheme, setAppearance, getAppearance } from './theme.js';
 import { initShell } from './ui/shell.js';
 import { initPins } from './ui/pins.js';
+import { initColorPicker } from './ui/color-picker.js';
 import { renderPresetThumb, initShapeGlyphs } from './ui/preset-thumbs.js';
 import './style.css';
 
 initTheme();
 initShapeGlyphs();
+initColorPicker();
 
 // ── Presets ──────────────────────────────────────────────────
 const PRESETS = {
@@ -136,11 +138,18 @@ const previewEl = document.getElementById('qr-preview');
 qrCode.append(previewEl);
 
 // ── Debounced Update ────────────────────────────────────────
+function pulsePreview() {
+    previewEl.classList.remove('is-updating');
+    void previewEl.offsetWidth;
+    previewEl.classList.add('is-updating');
+}
+
 function updateQR() {
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
         const opts = buildOptions();
         qrCode.update(opts);
+        pulsePreview();
     }, 150);
 }
 

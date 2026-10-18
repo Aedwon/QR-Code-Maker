@@ -30,6 +30,7 @@
   --motion-normal: 180ms;
   --motion-panel: 240ms;
   --motion-ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --motion-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 
   --font: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
 
@@ -511,6 +512,105 @@ html[data-theme="dark"] .preset-preview { box-shadow: none; }
   .app-inspector { left: var(--gut); width: auto; top: calc(var(--gut) + 64px); }
   .input-card { padding: 12px; }
 }
+
+/* ---------- Color popover ---------- */
+.cp {
+  position: fixed; z-index: 60; width: 248px; padding: 12px; display: flex; flex-direction: column; gap: 12px;
+  background: var(--surface); border-radius: 18px; box-shadow: var(--shadow-float);
+  opacity: 0; transform: scale(0.94) translateY(-4px);
+  transition: opacity var(--motion-fast) var(--motion-ease), transform var(--motion-panel) var(--motion-spring);
+}
+.cp[hidden] { display: none; }
+.cp.is-open { opacity: 1; transform: none; }
+html[data-theme="dark"] .cp { box-shadow: var(--shadow-float), inset 0 0 0 1px rgba(255, 255, 255, 0.05); }
+.cp-sv {
+  position: relative; height: 140px; border-radius: 12px; cursor: crosshair; touch-action: none;
+  background: linear-gradient(to top, #000, transparent), linear-gradient(to right, #fff, var(--hue, red));
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.cp-sv:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cp-sv-dot {
+  position: absolute; width: 18px; height: 18px; margin: -9px 0 0 -9px; border-radius: 50%; pointer-events: none;
+  border: 3px solid #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+.cp-sv:active .cp-sv-dot { transform: scale(1.25); transition: transform var(--motion-fast) var(--motion-spring); }
+.cp-hue {
+  -webkit-appearance: none; appearance: none; width: 100%; height: 14px; margin: 0; border-radius: 7px; cursor: pointer; padding: 0;
+  background: linear-gradient(to right, #f00, #ff0, #0f0, #0ff, #00f, #f0f, #f00);
+  box-shadow: inset 0 0 0 1px var(--hair);
+}
+.cp-hue::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #fff; border: 3px solid #fff;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25), 0 2px 6px rgba(0, 0, 0, 0.3); transition: transform var(--motion-fast) var(--motion-spring);
+}
+.cp-hue:active::-webkit-slider-thumb { transform: scale(1.2); }
+.cp-hue::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: #fff; border: 3px solid #fff; box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.25); }
+.cp-hue:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.cp-row { display: flex; align-items: center; gap: 8px; }
+.cp-preview { width: 36px; height: 36px; border-radius: 10px; flex: none; box-shadow: inset 0 0 0 1px var(--hair); }
+.cp-swatches { display: grid; grid-template-columns: repeat(8, 1fr); gap: 6px; }
+.cp-swatch {
+  aspect-ratio: 1; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px var(--hair);
+  transition: transform var(--motion-fast) var(--motion-spring), box-shadow var(--motion-fast) var(--motion-ease);
+}
+.cp-swatch:hover { transform: scale(1.12); }
+.cp-swatch:active { transform: scale(0.92); }
+.cp-swatch.on { box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--accent); }
+.color-input { transition: transform var(--motion-fast) var(--motion-spring), box-shadow var(--motion-fast) var(--motion-ease); }
+.color-input:hover { box-shadow: 0 0 0 1px var(--border-hover); }
+.color-input[aria-expanded="true"] { box-shadow: 0 0 0 2px var(--accent); }
+
+/* ---------- Motion: springy, interruptible ---------- */
+@keyframes pop { 0% { transform: scale(0.82); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+@keyframes rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes pulse { 0% { transform: scale(0.97); opacity: 0.7; } 100% { transform: none; opacity: 1; } }
+@keyframes dock-in { from { opacity: 0; transform: translateY(-6px) scale(0.98); } to { opacity: 1; transform: none; } }
+
+/* Press down fast, release with a spring. */
+.icon-btn, .nav-item, .util-btn, .style-btn, .preset-btn, .ec-btn, .seg-btn, .btn-primary, .btn-secondary, .pin-btn {
+  transition: background var(--motion-fast) var(--motion-ease), color var(--motion-fast) var(--motion-ease),
+    box-shadow var(--motion-normal) var(--motion-ease), transform var(--motion-normal) var(--motion-spring);
+}
+.icon-btn:active, .nav-item:active, .util-btn:active, .style-btn:active, .preset-btn:active, .ec-btn:active, .seg-btn:active, .pin-btn:active { transform: scale(0.94); transition-duration: 60ms; }
+.btn-primary:active, .btn-secondary:active { transform: scale(0.97); transition-duration: 60ms; }
+.btn-primary:hover { transform: translateY(-1px); }
+.btn-primary:hover:active { transform: scale(0.97); }
+
+/* Selection lands with a pop. */
+.style-btn.active svg, .nav-item[aria-current="page"] .ic, .pin-btn[aria-pressed="true"] .pin-on, .seg-btn[aria-pressed="true"] svg { animation: pop 340ms var(--motion-spring); }
+.preset-btn.active .preset-preview { animation: pop 340ms var(--motion-spring); }
+.ec-btn.active, .seg-btn[aria-pressed="true"] { animation: pop 300ms var(--motion-spring); }
+.preset-btn:hover .preset-preview { transform: translateY(-2px); }
+.preset-preview { transition: transform var(--motion-normal) var(--motion-spring), box-shadow var(--motion-normal) var(--motion-ease); }
+.style-btn:hover { transform: translateY(-1px); }
+.style-btn:hover:active { transform: scale(0.94); }
+
+/* Toggle: thumb springs across. */
+.toggle-slider::after { transition: transform 280ms var(--motion-spring); }
+
+/* Inspector content rises in, staggered, when a section opens. */
+.inspector-section:not([hidden]) > * { animation: rise 320ms var(--motion-spring) both; }
+.inspector-section:not([hidden]) > *:nth-child(2) { animation-delay: 40ms; }
+.inspector-section:not([hidden]) > *:nth-child(3) { animation-delay: 80ms; }
+.inspector-section:not([hidden]) > *:nth-child(4) { animation-delay: 120ms; }
+.inspector-section:not([hidden]) > *:nth-child(n+5) { animation-delay: 160ms; }
+.inspector-head h2 { animation: rise 280ms var(--motion-spring) both; }
+.dock-item { animation: dock-in 260ms var(--motion-spring) both; }
+
+/* QR preview pulses when the code regenerates. */
+.qr-preview.is-updating { animation: pulse 260ms var(--motion-ease); }
+
+@media (max-width: 899px) {
+  .app-nav, .app-inspector {
+    transition: transform var(--motion-panel) var(--motion-spring), opacity var(--motion-normal) var(--motion-ease), visibility 0s linear var(--motion-panel);
+  }
+  .app-nav.is-open, .app-inspector.is-open {
+    transition: transform 320ms var(--motion-spring), opacity var(--motion-normal) var(--motion-ease), visibility 0s;
+  }
+  .panel-backdrop:not([hidden]) { animation: fade-in var(--motion-normal) var(--motion-ease); }
+}
+@keyframes fade-in { from { opacity: 0; } to { opacity: 1; } }
+.modal-card, .modal-content { animation-timing-function: var(--motion-spring); }
 
 /* ---------- Reduced motion & forced colors ---------- */
 @media (prefers-reduced-motion: reduce) {
