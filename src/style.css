@@ -625,6 +625,22 @@ html[data-theme="dark"] .cp { box-shadow: var(--shadow-float), inset 0 0 0 1px r
 
 @media (min-width: 1400px) { .workspace { --ws-w: 760px; } }
 
+/* ---------- Content types ---------- */
+.content-modes { margin-bottom: 12px; }
+.content-seg .seg-btn { font-size: 13px; font-weight: 500; height: 32px; }
+.content-seg .seg-btn[aria-pressed="true"] { font-weight: 600; }
+.mode-form { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.mode-form .field-label { margin-bottom: 6px; }
+.mode-form .seg-btn { height: 32px; font-size: 13px; padding: 0 14px; }
+.mf { display: block; min-width: 0; }
+.mf-row { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+.mf-toggle { display: flex; flex-direction: column; align-items: flex-start; }
+.text-input { width: 100%; background: var(--control); border: 0; border-radius: 12px; padding: 10px 14px; display: block; resize: none; }
+.text-input:hover { background: var(--raised); }
+.text-input:focus { outline: none; background: var(--surface); box-shadow: 0 0 0 2px var(--accent); }
+.mode-form[hidden], textarea[hidden], .field-label[hidden] { display: none; }
+@media (max-width: 899px) { .content-seg .seg-btn, .mode-form .seg-btn { height: 40px; } }
+
 /* ---------- Hidden scrollbars (areas still scroll) ---------- */
 * { scrollbar-width: none; -ms-overflow-style: none; }
 *::-webkit-scrollbar { display: none; width: 0; height: 0; }

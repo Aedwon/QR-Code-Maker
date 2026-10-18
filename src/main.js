@@ -11,6 +11,7 @@ import { initShell } from './ui/shell.js';
 import { initPins } from './ui/pins.js';
 import { initColorPicker } from './ui/color-picker.js';
 import { initSlidingSegments } from './ui/sliding-segments.js';
+import { initContentModes } from './ui/content-modes.js';
 import { renderPresetThumb, initShapeGlyphs } from './ui/preset-thumbs.js';
 import './style.css';
 
@@ -18,6 +19,8 @@ initTheme();
 initShapeGlyphs();
 initColorPicker();
 initSlidingSegments();
+
+initContentModes();
 
 // ── Presets ──────────────────────────────────────────────────
 const PRESETS = {
